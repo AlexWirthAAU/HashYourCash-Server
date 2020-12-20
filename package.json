@@ -1,0 +1,23 @@
+{
+  "name": "hyc-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexWirthAAU/HashYourCash-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexWirthAAU/HashYourCash-Server/issues"
+  },
+  "homepage": "https://github.com/AlexWirthAAU/HashYourCash-Server#readme"
+}
