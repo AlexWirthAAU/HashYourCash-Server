@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
-const loginRoutes = require('.routes/login');
+
 const registerRoutes = require('.routes/register');
 
 app.use("/register", registerRoutes)
