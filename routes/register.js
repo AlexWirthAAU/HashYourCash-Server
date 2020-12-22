@@ -6,7 +6,8 @@ const router = express.Router();
 
 
 router.post('/', (req, res) => {
-    console.log(req.body);
+    const db = getDb();
+    console.log(req.formData);
     res.status(200).json({message: "user registered"});
 })
 
