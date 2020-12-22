@@ -12,8 +12,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
-app.use(upload.array()); 
-app.use(express.static('public'));
 
 const registerRoutes = require('./routes/register');
 
