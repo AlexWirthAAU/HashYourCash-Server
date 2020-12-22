@@ -14,6 +14,7 @@ app.use(bodyParser.json()); //support json bodies
 const loginRoutes = require('.routes/login');
 const registerRoutes = require('.routes/register');
 
+app.use("/register", registerRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
