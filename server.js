@@ -13,7 +13,9 @@ app.use(bodyParser.json()); //support json bodies
 
 const registerRoutes = require('./routes/register');
 
-app.use("/register", registerRoutes)
+app.post("/register", (req, res) => {
+    console.log(req.body)
+})
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
