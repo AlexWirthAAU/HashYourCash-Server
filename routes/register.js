@@ -9,7 +9,7 @@ const getDb = require("../database").getDb;
 router.post('/', (req, res) => {
     const db = getDb();
 
-    console.log(req.body);
+    console.log(req.body.username);
     res.status(200).json({message: "user registered"});
 })
 
