@@ -4,9 +4,6 @@ const db = require('./database');
 let express = require('express');
 let cors = require('cors');
 let bodyParser = require('body-parser');
-var multer = require('multer');
-var upload = multer();
-
 
 const app = express();
 app.use(cors());
