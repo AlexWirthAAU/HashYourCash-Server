@@ -14,17 +14,13 @@ const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 
 app.use("/register", registerRoutes)
-app.use("/login", loginRoutes)
+//app.use("/login", loginRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
     res.send("Hello world!");
 })
 
-app.get("/test", (req, res) => {
-    console.log("Received Test Request");
-    res.send("Hello Test!");
-})
 
 const PORT = process.env.PORT || config.server.port;
 db.initializeDB.then(() => {
