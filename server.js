@@ -12,8 +12,13 @@ app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
 app.get("/", (req, res) => {
+    console.log("Received Standard Request");
+    res.send("Hello world!");
+})
+
+app.get("/test", (req, res) => {
     console.log("Received Test Request");
-    res.status(200).json({"message": "Test Request"})
+    res.send("Hello Test!");
 })
 
 const PORT = process.env.PORT || config.server.port;
