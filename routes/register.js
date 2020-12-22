@@ -3,10 +3,12 @@
 */
 const express = require('express');
 const router = express.Router();
+const getDb = require("../database").getDb;
 
 
 router.post('/', (req, res) => {
     const db = getDb();
+
     console.log(req.formData);
     res.status(200).json({message: "user registered"});
 })
