@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 
     bcryptjs.hash(data.password, saltRounds, function (err, hash) {
         if (err) {
-            console.error(err);
+            console.error(err , "Hash error");
             res.status(500).json({ message: "an error occured" });
         } else {
             const statement = "INSERT INTO user (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 
             db.query(statement, values, (err, result) => {
                 if (err) {
-                    console.error(err);
+                    console.error(err, "DB error");
                     res.status(500).json({ message: "an error occured" });
                 } else {
                     res.status(200).json({ message: "user registered" });
