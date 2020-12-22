@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
     console.log("Received Test Request");
     res.status(200).json({"message": "Test Request"})
 })
