@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
             const statement = "INSERT INTO user (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
             const values = [data.email, data.first_name, data.last_name, hash];
 
-            db.query(statement, values, (err, res) => {
+            db.query(statement, values, (err, result) => {
                 if (err) {
                     res.status(500).json({ message: "an error occured" });
                 } else {
