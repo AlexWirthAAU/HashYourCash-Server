@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
             console.error(err , "Hash error");
             res.status(500).json({ message: "an error occured" });
         } else {
-            const statement = "INSERT INTO users (email, u_password, first_name, last_name) VALUES (?, ?, ?, ?)";
+            const statement = "INSERT INTO users (email, u_password, first_name, last_name) VALUES ($1, $2, $3, $4)";
             const values = [data.email, hash, data.first_name, data.last_name,];
 
             db.query(statement, values, (err, result) => {
