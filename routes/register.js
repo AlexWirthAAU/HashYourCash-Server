@@ -42,8 +42,8 @@ router.get("/emails", (req, res) => {
             console.error(err, "DB error");
             res.status(500).json({ message: "an error occured" });
         } else {
-            console.log(result);
-            res.status(200).json(result[rows]);
+            console.log(result.rows);
+            res.status(200).json(result.rows);
         }
     })
 })
