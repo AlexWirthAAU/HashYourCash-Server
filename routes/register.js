@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
 
 router.get("/emails", (req, res) => {
     const db = getDb();
+    console.log("Request comming", req)
 
     const statement = "SELECT * FROM users";
     db.query(statement, (err, result) => {
