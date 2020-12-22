@@ -11,7 +11,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
+const registerRoutes = require('./routes/register');
 
+app.use("/register", registerRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
