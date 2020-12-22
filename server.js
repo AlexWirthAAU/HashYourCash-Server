@@ -4,17 +4,22 @@ const db = require('./database');
 let express = require('express');
 let cors = require('cors');
 let bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer();
 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
+app.use(upload.array()); 
+app.use(express.static('public'));
 
-const registerRoutes = require('./routes/register');
+//const registerRoutes = require('./routes/register');
 
 app.post("/register", (req, res) => {
     console.log(req.body)
+    res.send("Hallo")
 })
 
 app.get("/", (req, res) => {
