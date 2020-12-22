@@ -32,6 +32,21 @@ router.post('/', async (req, res) => {
     })
 })
 
+router.get("/emails", (req, res) => {
+    const db = getDb();
+
+    const statement = "SELECT * FROM users";
+    db.query(statement, (err, result) => {
+        if(err) {
+            console.error(err, "DB error");
+            res.status(500).json({ message: "an error occured" });
+        } else {
+            console.log(result);
+            res.status(200).json({ message: "emails logged" });
+        }
+    })
+})
+
 
 
 module.exports = router;
