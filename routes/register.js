@@ -43,7 +43,7 @@ router.get("/emails", (req, res) => {
             res.status(500).json({ message: "an error occured" });
         } else {
             console.log(result);
-            res.status(200).json(result);
+            res.status(200).json(result[rows]);
         }
     })
 })
