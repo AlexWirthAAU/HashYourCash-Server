@@ -6,7 +6,7 @@ const router = express.Router();
 const getDb = require("../database").getDb;
 const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
-const db = getDb();
+
 
 router.post('/', async (req, res) => {
     const db = getDb();
