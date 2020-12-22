@@ -11,8 +11,10 @@ app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
 const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
 
 app.use("/register", registerRoutes)
+app.use("/login", loginRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
