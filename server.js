@@ -15,12 +15,9 @@ app.use(bodyParser.json()); //support json bodies
 app.use(upload.array()); 
 app.use(express.static('public'));
 
-//const registerRoutes = require('./routes/register');
+const registerRoutes = require('./routes/register');
 
-app.post("/register", (req, res) => {
-    console.log(req.body)
-    res.send("Hallo")
-})
+app.use("/register", registerRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
