@@ -11,6 +11,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 app.use(bodyParser.json()); //support json bodies
 
+const loginRoutes = require('.routes/login');
+const registerRoutes = require('.routes/register');
+
+
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
     res.send("Hello world!");
@@ -26,7 +30,6 @@ db.initializeDB.then(() => {
     app.listen(PORT, () => {
         console.log("Listening on Port " + PORT)
     });
-    
 },
 ()=> {console.log("Failed to connect to DB!")})
 
