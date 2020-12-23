@@ -7,6 +7,17 @@ router.get("/", checkAuth, (req, res) => {
     const db = getDb();
     console.log("Midellware ending")
 
+    const statement = "SELECT * FROM users WHERE u_id = $1";
+    const values = [req.headers.u_id]
+
+    db.query(statement, values, (err, result) => {
+        if (err) {
+            console.error("DB error when getting user: ", err.message)
+        } else {
+            res.status(200).json(result.rows[0]);
+        }
+    })
+
 
 
 })
