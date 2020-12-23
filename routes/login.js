@@ -30,8 +30,7 @@ router.post('/', (req, res) => {
                 bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
                     console.log("---------")
                     if(err) {
-                        console.error("Hasihing error: ", err.message)
-                        res.status(500).json({message: "an error occured with hasing password"});
+                        console.error("Hashing error: ", err.message)
                     }
                     if(result_hash) {
                         let token = jwt.sign({
