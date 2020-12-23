@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
                 bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
                     if(err) {
                         console.error("Hasihing error: ", err.message)
-                        resp.status(500).json({message: "an error occured with hasing password"});
+                        res.status(500).json({message: "an error occured with hasing password"});
                     }
                     if(result_hash) {
                         let token = jwt.sign({
@@ -39,13 +39,13 @@ router.post('/', (req, res) => {
                             expiresIn: '24h'
                         });
 
-                        const text = "UPDATE users SET token = $1 WHERE email = $2";
+                        const text = "UPDATE users SET u_token = $1 WHERE email = $2";
                         const vals = [token, email]
 
                         db.query(text, vals, function(err, result_token_update){
                             if(err) {
                                 console.error("DB-Error in updating: ", err.message)
-                                resp.status(500).json({message: "an error occured"});
+                                res.status(500).json({message: "an error occured"});
                             } else {
                                 console.log("Updating with token was successful")
                             }
