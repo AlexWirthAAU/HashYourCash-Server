@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
 
                 db.query(statment, values, (err, result) => {
                     if (err) {
+                        console.error("DB error when checking Token: ", err.message)
                         res.status(500).json({ message: "an error occured" });
                     } else {
                         if (result.rows.length != 1) {
