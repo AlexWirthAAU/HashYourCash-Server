@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
+const checkAuth = require('../check_auth');
 
-router.get("/", (req, res) => {
+router.get("/", checkAuth, (req, res) => {
     const db = getDb();
-    console.log("Requesting userData: ", req.headers.authorization)
+    console.log("Midellware ending")
+
+
+
 })
 
 router.get("/emails", (req, res) => {
