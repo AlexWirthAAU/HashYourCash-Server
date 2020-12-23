@@ -12,8 +12,6 @@ router.post('/', (req, res) => {
     const db = getDb();
     let email = req.body.email;
     let password = req.body.password;
-    console.log("User Input PW: ", password);
-    
 
     const statement = "SELECT * FROM users WHERE email = $1"
     const values = [email];
@@ -27,10 +25,11 @@ router.post('/', (req, res) => {
                 console.error("DB error (more than two pw): ", err.message)
                 res.status(500).json({ message: "an error occured when logging in" });
             } else {
-                bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
-                    console.log("---------")
+                console.log(result.rows[0].u_password)
+                bcryptjs.compare(req.body.password, result.rows[0].u_password, function(err, result_hash) {
                     if(err) {
                         console.error("Hashing error: ", err.message)
+                        res.status(500).json({ message: "an error occured"})
                     }
                     if(result_hash) {
                         let token = jwt.sign({
