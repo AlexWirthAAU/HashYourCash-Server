@@ -4,6 +4,7 @@ const getDb = require("./database").getDb;
 
 module.exports = (req, res, next) => {
     const token = req.headers.authorization;
+    console.log(token);
 
     if(token === null) {
         return res.status(401).json({ message: "Authentication failed" });
