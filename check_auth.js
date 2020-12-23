@@ -1,6 +1,6 @@
 let cfg = require('./config.json')
 const jwt = require('jsonwebtoken');
-const getDb = require("./db").getDb;
+const getDb = require("../database").getDb;
 
 module.exports = (req, res, next) => {
     const token = req.headers.authorization;
