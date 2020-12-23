@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
                 console.error("DB error (more than two pw): ", err.message)
                 res.status(500).json({ message: "an error occured when logging in" });
             } else {
+                console.log(result.rows)
                 bcryptjs.compare(password, result.rows[0].u_password, function(err, result) {
                     if(err) {
                         console.error("Hasihing error: ", err.message)
