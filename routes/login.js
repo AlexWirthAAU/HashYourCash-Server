@@ -7,6 +7,7 @@ const getDb = require("../database").getDb;
 const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
+
 router.post('/', (req, res) => {
     const db = getDb();
     let email = req.body.email;
