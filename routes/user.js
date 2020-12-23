@@ -4,7 +4,7 @@ const getDb = require("../database").getDb;
 
 router.get("/", (req, res) => {
     const db = getDb();
-    console.log("Requesting userData: ", req.headers)
+    console.log("Requesting userData: ", req.headers.authorization)
 })
 
 router.get("/emails", (req, res) => {
