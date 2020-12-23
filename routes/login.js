@@ -53,6 +53,8 @@ router.post('/', (req, res) => {
                                 });
                             }
                         })
+                    } else {
+                        res.status(500).json({ message: "Passwords do not match"})
                     }
                 })
             }
