@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     if(token === null) {
         return res.status(401).json({ message: "Authentication failed" });
     } else {
-        jwt.verify(token, cfg.auth.jwt, (err, data) => {
+        jwt.verify(token, cfg.server.jwt_secret, (err, data) => {
             if(err) {
                 return res.status(401).json({ message: "Authentication failed" });
             } else {
