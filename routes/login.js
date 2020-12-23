@@ -48,6 +48,10 @@ router.post('/', (req, res) => {
                                 res.status(500).json({message: "an error occured"});
                             } else {
                                 console.log("Updating with token was successful")
+                                res.status(200).json({
+                                    u_id: result.rows[0].u_id,
+                                    token: token,
+                                });
                             }
                         })
                     }
