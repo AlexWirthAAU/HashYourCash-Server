@@ -28,6 +28,7 @@ router.post('/', (req, res) => {
                 res.status(500).json({ message: "an error occured when logging in" });
             } else {
                 bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
+                    console.log("---------")
                     if(err) {
                         console.error("Hasihing error: ", err.message)
                         res.status(500).json({message: "an error occured with hasing password"});
