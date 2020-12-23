@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
                 return res.status(401).json({ message: "Authentication failed" });
             } else {
 
-                const statment = "SELECT * FROM users WHERE u_id = §1 AND u_token = $2";
+                const statment = "SELECT * FROM users WHERE u_id = $1 AND u_token = $2";
                 const values = [data.u_id, token]
 
                 db.query(statment, values, (err, result) => {
