@@ -27,12 +27,12 @@ router.post('/', (req, res) => {
                 res.status(500).json({ message: "an error occured when logging in" });
             } else {
                 console.log(result.rows)
-                bcryptjs.compare(password, result.rows[0].u_password, function(err, result) {
+                bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
                     if(err) {
                         console.error("Hasihing error: ", err.message)
                         resp.status(500).json({message: "an error occured with hasing password"});
                     }
-                    if(result) {
+                    if(result_hash) {
                         let token = jwt.sign({
                             u_id: result.rows[0].u_id
                         }, cfg.database.jwt_secret, {
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
                         const text = "UPDATE users SET token = $1 WHERE email = $2";
                         const vals = [token, email]
 
-                        db.query(text, vals, function(err, result){
+                        db.query(text, vals, function(err, result_token_update){
                             if(err) {
                                 console.error("DB-Error in updating: ", err.message)
                                 resp.status(500).json({message: "an error occured"});
