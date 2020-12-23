@@ -19,6 +19,7 @@ router.post('/', (req, res) => {
             res.status(200).json(result)
         })
         .catch(err => {
+            console.error("Rejected: ", err)
             res.status(500).json(err)
     })
     /*
