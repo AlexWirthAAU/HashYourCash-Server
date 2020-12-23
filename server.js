@@ -14,7 +14,7 @@ const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 
 app.use("/register", registerRoutes)
-//app.use("/login", loginRoutes)
+app.use("/login", loginRoutes)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
