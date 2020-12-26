@@ -76,7 +76,7 @@ function resetPW(password, token) {
                                         reject("HASHING ERROR");
                                     } else {
 
-                                        const text = "UPDATE users SET password = $1 WHERE u_id = $2";
+                                        const text = "UPDATE users SET u_password = $1 WHERE u_id = $2";
                                         const vals = [hash, result.u_id];
 
                                         db.query(text, vals, (errReset, resReset) => {
@@ -84,7 +84,7 @@ function resetPW(password, token) {
                                                 console.error("DB error resetpw: ", errReset.message);
                                                 reject("DB RESET PW ERROR")
                                             } else {
-                                                console.log("Password reset.")
+                                                console.log("Password reset")
                                                 resolve("PASSWORD RESET")
                                             }
                                         })
@@ -138,7 +138,7 @@ function initForgotPw(email) {
                             const emailMessage = {
                                 to: email,
                                 from: 'hashyourcash@gmail.com',
-                                subject: 'Hello from Sendgrid',
+                                subject: 'Setze dein Passwort zurück',
                                 html: '<h1 style="color: #5e9ca0;"><span style="color: #333333;">Passwort vergessen?</span></h1><p>Du hast dein Passwort vergessen. Unter folgendem Link kannst du ein neues vergeben:</p>' + URL + '<p>&nbsp;</p><p>(Falls du die Erneuerung deines Passworts nicht angefordert hast, kannst du diese Email ignorieren)</p><p>&nbsp;</p><p><strong>&nbsp;</strong></p>'
                             };
 
