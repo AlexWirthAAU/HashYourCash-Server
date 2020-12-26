@@ -31,7 +31,7 @@ function initForgotPw (email) {
     const statement = "SELECT * FROM users WHERE email = $1"
     const values = [email];
 
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         db.query(statement, values, (err, result) => {
             if (err) {
                 reject("DB ERROR");
