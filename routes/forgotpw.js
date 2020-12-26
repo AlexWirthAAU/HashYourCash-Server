@@ -19,8 +19,8 @@ router.post('/request', (req, res) => {
     console.log(req.body)
 
     initForgotPw(email)
-    .then(res => {
-        res.status(200).json({message: res})
+    .then(result => {
+        res.status(200).json({message: result})
     })
     .catch(err => {
         res.status(500).json({message: err.message})
@@ -62,17 +62,20 @@ function initForgotPw (email) {
                             console.log("Updating with token was successful")
 
                             const emailMessage = {
-                                to: 'alex@wirth.email',
+                                to: email,
                                 from: 'hashyourcash@gmail.com',
                                 subject: 'Hello from Sendgrid',
                                 text: 'Hello! This is a test-email!'
                             };
 
                             sgMail.send(emailMessage)
-                            .then(response => console.log("E-Mail sent..."))
-                            .catch(err => console.error("Email not send: ", err.message))
-
-                            resolve("FINISHED")
+                            .then(res => {
+                                console.log("Email sent...")
+                                resolve("FINISHED")
+                            })
+                            .catch(err => {
+                                reject("EMAIL NOT SENT ", err.message)
+                            })
                         }
                     })
                 } else {
