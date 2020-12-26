@@ -10,6 +10,7 @@ const saltRounds = 10;
 const cfg = require('../config.json')
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail')
+const db = getDb();
 
 sgMail.setApiKey(cfg.sendgrid.key);
 
