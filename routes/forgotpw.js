@@ -61,7 +61,7 @@ function initForgotPw (email) {
                         } else {
                             console.log("Updating with token was successful")
 
-                            const URL = '<p><a title="New Password" href="https://hashyourcashapp.herokuapp.com/resetpw/$token' + token + '">https://hashyourcashapp.herokuapp.com/resetpw</a></p>'
+                            const URL = '<p><a title="New Password" href="https://hashyourcashapp.herokuapp.com/resetpw/' + token + '">https://hashyourcashapp.herokuapp.com/resetpw</a></p>'
 
                             const emailMessage = {
                                 to: email,
