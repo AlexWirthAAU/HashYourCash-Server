@@ -45,7 +45,7 @@ function register(data) {
                             to: data.email,
                             from: 'hashyourcash@gmail.com',
                             subject: 'Herzlich Willkommen!',
-                            html: '<h2><strong>Herzlich Willkommen bei HashYourCash!</strong></h2><p>Du hast dichvor kurzem bei HashYourCash registriert! Du kannst dich nun einloggen und deine Einnahmen und Ausgaben tracken. Folge dazu diesem Link:</p><p><a title="HashYourCash Login" href="https://hashyourcashapp.herokuapp.com">https://hashyourcashapp.herokuapp.com</a></p><p><em>Vielen Dank f&uuml;r dein Vertrauen!</em></p>'
+                            html: '<h2><strong>Herzlich Willkommen bei HashYourCash!</strong></h2><p>Du hast dich vor kurzem bei HashYourCash registriert! Du kannst dich nun einloggen und deine Einnahmen und Ausgaben tracken. Folge dazu diesem Link:</p><p><a title="HashYourCash Login" href="https://hashyourcashapp.herokuapp.com">https://hashyourcashapp.herokuapp.com</a></p><p><em>Vielen Dank f&uuml;r dein Vertrauen!</em></p>'
                         };
 
                         sgMail.send(emailMessage)
