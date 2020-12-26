@@ -29,6 +29,7 @@ router.post('/request', (req, res) => {
 })
 
 function initForgotPw (email) {
+    console.log("Email: ", email)
     const statement = "SELECT * FROM users WHERE email = $1"
     const values = [email];
 
