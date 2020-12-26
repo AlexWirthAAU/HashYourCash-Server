@@ -62,7 +62,7 @@ function initForgotPw (email) {
                             console.log("Updating with token was successful")
 
                             const emailMessage = {
-                                to: email,
+                                to: 'alex@wirth.email',
                                 from: 'hashyourcash@gmail.com',
                                 subject: 'Hello from Sendgrid',
                                 text: 'Hello! This is a test-email!'
