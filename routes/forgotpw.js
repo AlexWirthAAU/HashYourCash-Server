@@ -56,19 +56,19 @@ function resetPW(password, token) {
                     reject("TOKEN ERROR")
                 } else {
 
-                    const statment = "SELECT token FROM users WHERE u_id = $1";
+                    const statment = "SELECT u_token FROM users WHERE u_id = $1";
                     const values = [result.u_id]
 
                     db.query(statment, values, (error, res) => {
                         if (error) {
-                            console.error("Error with DB query")
+                            console.error("Error with DB query: ", err.message)
                             reject("ERROR WITH DB QUERY")
                         } else if (res.rows.length != 1) {
                             console.error("DB error when checking Token: ", err.message)
                             reject("DB ERROR TOKEN")
                         } else {
                             console.log("Token found");
-                            if (res.rows[0].token === token) {
+                            if (res.rows[0].u_token === token) {
 
                                 bcryptjs.hash(password, saltRounds, function (errHash, hash) {
                                     if (errHash) {
