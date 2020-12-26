@@ -70,7 +70,7 @@ function initForgotPw (email) {
 
                             sgMail.send(emailMessage)
                             .then(response => console.log("E-Mail sent..."))
-                            .catch(err => console.error(err.message))
+                            .catch(err => console.error("Email not send: ", err.message))
 
                             resolve("FINISHED")
                         }
