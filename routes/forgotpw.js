@@ -1,7 +1,6 @@
 /*@AlexWirthAAU
     Routen zur Abhandlung der registration.  
 */
-
 const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
@@ -11,10 +10,11 @@ const cfg = require('../config.json')
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail')
 const db = getDb();
-
 sgMail.setApiKey(cfg.sendgrid.key);
 
 router.post('/request', (req, res) => {
+    //User stellt die Anfrage das Passwort zu ändern --> Bekommt eine Email mit token zum ändern des Passwortes
+
     let email = req.body.email;
     console.log(req.body)
 
@@ -30,6 +30,8 @@ router.post('/request', (req, res) => {
 })
 
 router.post('/reset', (req, res) => {
+    //User kann über den Link aus der E-Mail (enthält token) sein Passwort ändern
+
     let password = req.body.password;
     let token = req.body.token;
 
@@ -38,13 +40,13 @@ router.post('/reset', (req, res) => {
             res.status(200).json({ message: result })
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({ message: err })
         })
 
 })
 
 function resetPW(password, token) {
+    //Request mit token und password kommt vom User-Input
 
     return new Promise((resolve, reject) => {
         if (token === null) {
@@ -57,6 +59,7 @@ function resetPW(password, token) {
                     reject("TOKEN ERROR")
                 } else {
 
+                    //Token wurde verifiziert und die u_id heraus geparsed. Damit kann überprüft werden ob der Token gültig ist
                     const statment = "SELECT u_token FROM users WHERE u_id = $1";
                     const values = [result.u_id]
 
@@ -68,6 +71,7 @@ function resetPW(password, token) {
                             console.error("DB error when checking Token: ", err.message)
                             reject("DB ERROR TOKEN")
                         } else {
+                            //Token ist gültig --> Passwort wird gehashed und gespeichert
                             console.log("Token found");
                             if (res.rows[0].u_token === token) {
 
