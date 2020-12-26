@@ -16,6 +16,7 @@ sgMail.setApiKey(cfg.sendgrid.key);
 
 router.post('/request', (req, res) => {
     let email = req.body.email;
+    console.log(req.body)
 
     initForgotPw(email)
     .then(res => {
