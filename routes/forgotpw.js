@@ -35,6 +35,7 @@ function initForgotPw (email) {
     return new Promise((resolve, reject) => {
         db.query(statement, values, (err, result) => {
             if (err) {
+                console.error("DB ERROR")
                 reject("DB ERROR");
                 return;
             } else {
@@ -72,6 +73,7 @@ function initForgotPw (email) {
                         }
                     })
                 } else {
+                    console.log("Email not found!")
                     reject("EMAIL NOT FOUND");
                 }
             }
