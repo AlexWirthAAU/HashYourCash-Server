@@ -13,10 +13,12 @@ app.use(bodyParser.json()); //support json bodies
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const userRoutes = require('./routes/user');
+const forgotpw = require('./routes/forgotpw');
 
 app.use("/register", registerRoutes)
 app.use("/login", loginRoutes)
 app.use("/user", userRoutes)
+app.use("/forgotpw", forgotpw)
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");

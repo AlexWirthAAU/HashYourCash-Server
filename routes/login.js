@@ -1,6 +1,7 @@
 /*@AlexWirthAAU
     Routen zur Abhandlung der logins.  
 */
+
 const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
@@ -14,6 +15,7 @@ router.post('/', (req, res) => {
     let password = req.body.password;
 
 
+    //Datenbank-Abfrage wird async. abgehandelt um mehrere Requests zum gleichen Zeitpunkt zu ermöglichen
     getUserByEmail(password, email)
         .then(result => {
             res.status(200).json(result)
@@ -22,6 +24,7 @@ router.post('/', (req, res) => {
             console.error("Rejected: ", err)
             res.status(500).json(err)
     })
+
     /*
 
     const statement = "SELECT * FROM users WHERE email = $1"
@@ -76,6 +79,7 @@ router.post('/', (req, res) => {
 })
 
 function getUserByEmail(password, email) {
+    //Zuerst den betroffenen User-Datensatz aus der DB holen (mittels email)
     const statement = "SELECT * FROM users WHERE email = $1"
     const values = [email];
 
@@ -89,12 +93,14 @@ function getUserByEmail(password, email) {
                     console.error("DB error (more than two pw): ", err.message)
                     reject(err);
                 } else if (result.rows.length == 1) {
+                    //User-Datensatz wurde gefunden: gehashte pwords vergleichen 
                     bcryptjs.compare(password, result.rows[0].u_password, function(err, result_hash) {
                         if(err) {
                             console.error("Hashing error: ", err.message)
                             reject(err);
                         }
                         if(result_hash) {
+                            //pwords stimmen über ein, also kann ein Token erzeugt und gespeichert werden
                             let token = jwt.sign({
                                 u_id: result.rows[0].u_id
                             }, cfg.database.jwt_secret, {
@@ -117,6 +123,7 @@ function getUserByEmail(password, email) {
                                 }
                             })
                         } else {
+                            //Pwords stimmen nicht über ein
                             reject("Passwords do not Match")
                         }
                     })
