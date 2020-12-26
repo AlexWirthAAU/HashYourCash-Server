@@ -57,7 +57,7 @@ function getAllEmails() {
                 console.error("DB error when getting emails: ", err.message);
                 reject("DB ERROR: ", err.message);
             } else {
-                resolve(result.rows[0])
+                resolve(result.rows)
             }
         })
     })
