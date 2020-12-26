@@ -8,8 +8,9 @@ const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 const db = getDb();
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(cfg.sendgrid.key);
 const cfg = require('../config.json')
+sgMail.setApiKey(cfg.sendgrid.key);
+
 
 router.post('/', (req, res) => {
     let data = req.body;
