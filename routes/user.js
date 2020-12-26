@@ -49,15 +49,17 @@ function getUser(u_id) {
 
 function getAllEmails() {
 
-    const statement = "SELECT email FROM users";
+    return new Promise((resolve, reject) => {
+        const statement = "SELECT email FROM users";
 
-    db.query(statement, (err, result) => {
-        if (err) {
-            console.error("DB error when getting emails: ", err.message);
-            reject("DB ERROR: ", err.message);
-        } else {
-            resolve(result.rows[0])
-        }
+        db.query(statement, (err, result) => {
+            if (err) {
+                console.error("DB error when getting emails: ", err.message);
+                reject("DB ERROR: ", err.message);
+            } else {
+                resolve(result.rows[0])
+            }
+        })
     })
 }
 
