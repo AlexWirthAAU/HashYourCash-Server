@@ -39,6 +39,7 @@ function initForgotPw (email) {
                 reject("DB ERROR");
                 return;
             } else {
+                console.log(result.rows)
                 if (result.rows.length === 1) {
                     //User-Datensatz gefunden --> erzeuge neuen Token und sende email
 
