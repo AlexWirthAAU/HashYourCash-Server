@@ -91,6 +91,9 @@ function resetPW(password, token) {
 
                                     }
                                 })
+                            } else {
+                                console.error("Token not found")
+                                reject("Token not found")
                             }
                         }
                     })
