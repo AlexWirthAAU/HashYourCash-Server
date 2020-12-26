@@ -19,17 +19,89 @@ router.post('/request', (req, res) => {
     console.log(req.body)
 
     initForgotPw(email)
-    .then(result => {
-        res.status(200).json({message: result})
-    })
-    .catch(err => {
-        res.status(500).json({message: err.message})
-    })
+        .then(result => {
+            res.status(200).json({ message: result })
+        })
+        .catch(err => {
+            res.status(500).json({ message: err })
+        })
 
 
 })
 
-function initForgotPw (email) {
+router.post('/reset', (req, res) => {
+    let password = req.body.password;
+    let token = req.body.token;
+
+    resetPW(password, token)
+        .then(result => {
+            res.status(200).json({ message: result })
+        })
+        .catch(err => {
+            res.status(500).json({ message: err })
+        })
+
+})
+
+function resetPW(password, token) {
+
+    return new Promise((resolve, reject) => {
+        if (token === null) {
+            console.error("No token")
+            reject("NO TOKEN")
+        } else {
+            jwt.verify(token, cfg.database.jwt_secret, (err, result) => {
+                if (err) {
+                    console.error("Error with token")
+                    reject("TOKEN ERROR")
+                } else {
+
+                    const statment = "SELECT token FROM users WHERE u_id = $1";
+                    const values = [result.u_id]
+
+                    db.query(statment, values, (error, res) => {
+                        if (error) {
+                            console.error("Error with DB query")
+                            reject("ERROR WITH DB QUERY")
+                        } else if (res.rows.length != 1) {
+                            console.error("DB error when checking Token: ", err.message)
+                            reject("DB ERROR TOKEN")
+                        } else {
+                            console.log("Token found");
+                            if (res.rows[0].token === token) {
+
+                                bcryptjs.hash(password, saltRounds, function (errHash, hash) {
+                                    if (errHash) {
+                                        console.error("Hashing Error: ", errHash.message);
+                                        reject("HASHING ERROR");
+                                    } else {
+
+                                        const text = "UPDATE users SET password = $1 WHERE u_id = $2";
+                                        const vals = [hash, result.u_id];
+
+                                        db.query(text, vals, (errReset, resReset) => {
+                                            if (errReset) {
+                                                console.error("DB error resetpw: ", errReset.message);
+                                                reject("DB RESET PW ERROR")
+                                            } else {
+                                                console.log("Password reset.")
+                                                resolve("PASSWORD RESET")
+                                            }
+                                        })
+
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    })
+
+}
+
+function initForgotPw(email) {
     console.log("Email: ", email)
     const statement = "SELECT * FROM users WHERE email = $1"
     const values = [email];
@@ -67,17 +139,17 @@ function initForgotPw (email) {
                                 to: email,
                                 from: 'hashyourcash@gmail.com',
                                 subject: 'Hello from Sendgrid',
-                                html: '<h1 style="color: #5e9ca0;"><span style="color: #333333;">Passwort vergessen?</span></h1><p>Du hast dein Passwort vergessen. Unter folgendem Link kannst du ein neues vergeben:</p>' + URL +'<p>&nbsp;</p><p>(Falls du die Erneuerung deines Passworts nicht angefordert hast, kannst du diese Email ignorieren)</p><p>&nbsp;</p><p><strong>&nbsp;</strong></p>'
+                                html: '<h1 style="color: #5e9ca0;"><span style="color: #333333;">Passwort vergessen?</span></h1><p>Du hast dein Passwort vergessen. Unter folgendem Link kannst du ein neues vergeben:</p>' + URL + '<p>&nbsp;</p><p>(Falls du die Erneuerung deines Passworts nicht angefordert hast, kannst du diese Email ignorieren)</p><p>&nbsp;</p><p><strong>&nbsp;</strong></p>'
                             };
 
                             sgMail.send(emailMessage)
-                            .then(res => {
-                                console.log("Email sent...")
-                                resolve("FINISHED")
-                            })
-                            .catch(err => {
-                                reject("EMAIL NOT SENT ", err.message)
-                            })
+                                .then(res => {
+                                    console.log("Email sent...")
+                                    resolve("FINISHED")
+                                })
+                                .catch(err => {
+                                    reject("EMAIL NOT SENT ", err.message)
+                                })
                         }
                     })
                 } else {
