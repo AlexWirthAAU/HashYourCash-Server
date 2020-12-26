@@ -67,7 +67,7 @@ function initForgotPw (email) {
                                 to: email,
                                 from: 'hashyourcash@gmail.com',
                                 subject: 'Hello from Sendgrid',
-                                html: '<h1 style="color: #5e9ca0;"><span style="color: #333333;">Passwort vergessen?</span></h1><p>Du hast dein Passwort vergessen. Unter folgendem Link kannst du ein neues vergeben:</p><p>&nbsp;</p><p>(Falls du die Erneuerung deines Passworts nicht angefordert hast, kannst du diese Email ignorieren)</p><p>&nbsp;</p><p><strong>&nbsp;</strong></p>'
+                                html: '<h1 style="color: #5e9ca0;"><span style="color: #333333;">Passwort vergessen?</span></h1><p>Du hast dein Passwort vergessen. Unter folgendem Link kannst du ein neues vergeben:</p>' + URL +'<p>&nbsp;</p><p>(Falls du die Erneuerung deines Passworts nicht angefordert hast, kannst du diese Email ignorieren)</p><p>&nbsp;</p><p><strong>&nbsp;</strong></p>'
                             };
 
                             sgMail.send(emailMessage)
