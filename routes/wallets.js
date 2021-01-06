@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
 
 function createWallet(wallets){
     return new Promise((resolve, reject) => {
-        const statement = "INSERT INTO Wallet (description, amount) VALUES ($1, $2, $3, $4)";
+        const statement = "INSERT INTO Wallet (description, amount) VALUES ($1, $2, $3)";
         const values = [wallets.name, wallets.description, wallets.amount];
         db.query(statement, values, (err, result) => {
             if (err) {
