@@ -9,7 +9,7 @@ const db = getDb();
 router.post('/', (req, res) => {
     let wallets = req.body;
 
-    createWallet(wallets)
+    createW(wallets)
         .then(result => {
             res.status(200).json({ message: result });
         })
@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
         })
 })
 
-function createWallet(wallets){
+function createW(wallets){
     return new Promise((resolve, reject) => {
         const statement = "INSERT INTO Wallet (description, amount) VALUES ($1, $2, $3)";
         const values = [wallets.name, wallets.description, wallets.amount];
