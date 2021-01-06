@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
-const checkAuth = require('../check_auth');
 const db = getDb();
 
 router.get('/', (req,res) => {
@@ -15,7 +14,7 @@ router.get('/', (req,res) => {
         res.status(500).json({ message: "an error occured: " + err.message })
     })
 })
-
+//not yet finished
 function getAllCats(){
     return new Promise((resolve, reject) => {
         const statement = 
