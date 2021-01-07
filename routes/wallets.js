@@ -18,10 +18,10 @@ router.post('/', (req, res) => {
         })
 })
 
-function createW(walletData, userId){
+function createW(walletData, u_id){
     return new Promise((resolve, reject) => {
         const statement = "INSERT INTO wallet (u_id, name, description, amount) VALUES ($1, $2, $3, $4)";
-        const values = [userId, walletData.name, walletData.description, walletData.amount];
+        const values = [u_id, walletData.name, walletData.description, walletData.amount];
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
