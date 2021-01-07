@@ -45,9 +45,6 @@ function showW(u_id){
                     console.error("DB error when getting wallets: ", err.message);
                     reject("DB ERROR: ", err.message);
                 } else {
-                    if (result.rows.length == 0) {
-                        throw new Error("There are no wallets yet");
-                      }
                     resolve(result.rows)
                 }
             })
