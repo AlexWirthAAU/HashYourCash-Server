@@ -10,9 +10,9 @@ const checkAuth = require('../check_auth');
 router.post('/', checkAuth, (req, res) => {
     let wallets = req.body;
 
-    createW(wallets, req.headers.u_id)
+    createW(wallets)
         .then(result => {
-            console.log(u_id + "in post")
+            //console.log(u_id + "in post")
             res.status(200).json({ message: result });
         })
         .catch(err => {
@@ -20,16 +20,16 @@ router.post('/', checkAuth, (req, res) => {
         })
 })
 
-function createW(walletData, u_id){
+function createW(walletsData, u_id){
     return new Promise((resolve, reject) => {
-        const statement = "INSERT INTO wallet (u_id, name, description, amount) VALUES ($1, $2, $3, $4)";
-        const values = [u_id, walletData.name, walletData.description, walletData.amount];
+        const statement = "INSERT INTO wallet ( name, description, amount) VALUES ($1, $2, $3)";
+        const values = [walletsData.name, walletsData.description, walletsData.amount];
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
-                console.log(u_id + "in function")
+                //console.log(u_id + "in function")
                 resolve("Wallet erstellt")
             }
     }
