@@ -36,7 +36,7 @@ router.post('/', checkAuth, (req, res) => {
 
 function showW(u_id){
 
-        const statement = "SELECT * FROM wallet WHERE u_id = $1";
+        const statement = "SELECT name, description, amount FROM wallet WHERE u_id = $1";
         const values = [u_id]
     
         return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ function showW(u_id){
                     if (result.rows.length == 0) {
                         throw new Error("There are no wallets yet");
                       }
-                    resolve(result.rows[0])
+                    resolve(result.rows)
                 }
             })
         })
