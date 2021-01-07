@@ -33,7 +33,7 @@ router.post('/', checkAuth, (req, res) => {
         })
 })
 
-router.delete("/", checkAuth, (req, res) => {
+router.delete("/", (req, res) => {
     let walletId = req.body;
 
     deleteW(walletId)
