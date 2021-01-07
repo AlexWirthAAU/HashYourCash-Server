@@ -8,9 +8,8 @@ const db = getDb();
 
 router.post('/', (req, res) => {
     let wallets = req.body;
-    let id = req.headers.u_id;
 
-    createW(wallets,id)
+    createW(wallets, req.headers.u_id)
         .then(result => {
             res.status(200).json({ message: result });
         })
@@ -19,16 +18,15 @@ router.post('/', (req, res) => {
         })
 })
 
-function createW(wallets, id){
+function createW(walletData, userId){
     return new Promise((resolve, reject) => {
-        const statement = "INSERT INTO wallet (name, description, amount) VALUES ($1, $2, $3)";
-        const values = [wallets.name, wallets.description, wallets.amount];
+        const statement = "INSERT INTO wallet (u_id, name, description, amount) VALUES ($1, $2, $3)";
+        const values = [userId, walletData.name, walletData.description, walletData.amount];
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
-                console.log(id);
                 resolve("Wallet erstellt")
             }
     }
