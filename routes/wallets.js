@@ -9,10 +9,10 @@ const checkAuth = require('../check_auth');
 
 router.post('/', checkAuth, (req, res) => {
     let wallets = req.body;
-    let userId = req.headers.u_id;
 
-    createW(wallets, userId)
+    createW(wallets, req.headers.u_id)
         .then(result => {
+            console.log(u_id + "in post")
             res.status(200).json({ message: result });
         })
         .catch(err => {
@@ -29,6 +29,7 @@ function createW(walletData, u_id){
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
+                console.log(u_id + "in function")
                 resolve("Wallet erstellt")
             }
     }
