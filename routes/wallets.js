@@ -9,10 +9,11 @@ const checkAuth = require('../check_auth');
 
 router.post('/', checkAuth, (req, res) => {
     let wallets = req.body;
+    let userId = req.headers.u_id
 
-    createW(wallets, req.headers.u_id)
+    createW(wallets, userId)
         .then(result => {
-            console.log(req.headers.u_id + "in post")
+            console.log(userId + "in post")
             res.status(200).json({ message: result });
         })
         .catch(err => {
