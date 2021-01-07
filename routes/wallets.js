@@ -5,8 +5,9 @@ const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
 const db = getDb();
+const checkAuth = require('../check_auth');
 
-router.post('/', (req, res) => {
+router.post('/', checkAuth, (req, res) => {
     let wallets = req.body;
     let userId = req.headers.u_id;
 
