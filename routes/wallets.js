@@ -8,8 +8,9 @@ const db = getDb();
 
 router.post('/', (req, res) => {
     let wallets = req.body;
+    let userId = req.headers.u_id;
 
-    createW(wallets, req.headers.u_id)
+    createW(wallets, userId)
         .then(result => {
             res.status(200).json({ message: result });
         })
