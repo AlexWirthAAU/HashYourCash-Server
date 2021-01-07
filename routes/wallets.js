@@ -12,7 +12,7 @@ router.post('/', checkAuth, (req, res) => {
 
     createW(wallets, req.headers.u_id)
         .then(result => {
-            console.log(u_id + "in post")
+            console.log(req.headers.u_id + "in post")
             res.status(200).json({ message: result });
         })
         .catch(err => {
