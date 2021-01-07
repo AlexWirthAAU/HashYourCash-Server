@@ -4,7 +4,6 @@ const getDb = require("./database").getDb;
 const db = getDb();
 
 module.exports = (req, res, next) => {
-    const db = getDb();
     const token = req.headers.authorization;
 
     checkAuth(token)
