@@ -36,7 +36,7 @@ router.post('/', checkAuth, (req, res) => {
 
 function showW(u_id){
 
-        const statement = "SELECT name, description, amount FROM wallet WHERE u_id = $1";
+        const statement = "SELECT w_id, name, description, amount FROM wallet WHERE u_id = $1";
         const values = [u_id]
     
         return new Promise((resolve, reject) => {
