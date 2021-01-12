@@ -19,9 +19,9 @@ router.get("/", checkAuth, (req, res) => {
         })
 })
 
-router.get("/emails", (req, res) => {
+router.get("/email", (req, res) => {
 
-    getAllEmails()
+    getEmailCheck(req.body.email)
         .then(emails => {
             res.status(200).json(emails);
         })
@@ -47,10 +47,11 @@ function getUser(u_id) {
     })
 }
 
-function getAllEmails() {
+function getEmailCheck(email) {
 
     return new Promise((resolve, reject) => {
-        const statement = "SELECT email FROM users";
+        const statement = "SELECT id_u FROM users WHERE email = $1";
+        const values = [email]
 
         db.query(statement, (err, result) => {
             if (err) {
