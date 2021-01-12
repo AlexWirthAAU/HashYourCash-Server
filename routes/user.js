@@ -19,11 +19,10 @@ router.get("/", checkAuth, (req, res) => {
         })
 })
 
-router.post("/email", (req, res) => {
+router.get("/emails", (req, res) => {
 
-    console.log("Incomming mail: ", req.body)
 
-    getEmailCheck(req.body.email)
+    getEmailCheck()
         .then(isRegistered => {
             res.status(200).json(isRegistered);
         })
@@ -52,20 +51,15 @@ function getUser(u_id) {
 function getEmailCheck(email) {
 
     return new Promise((resolve, reject) => {
-        const statement = "SELECT u_id FROM users WHERE email = $1";
-        const values = [email]
+        const statement = "SELECT email FROM users";
+        
 
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB error when getting emails: ", err.message);
                 reject("DB ERROR: ", err.message);
             } else {
-                if(result.rows.length > 0) {
-                    resolve("true")
-                } else {
-                    resolve("false")
-                }
-                
+                resolve(result.rows)
             }
         })
     })
