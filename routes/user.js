@@ -48,13 +48,13 @@ function getUser(u_id) {
     })
 }
 
-function getEmailCheck(email) {
+function getEmailCheck() {
 
     return new Promise((resolve, reject) => {
         const statement = "SELECT email FROM users";
         
 
-        db.query(statement, values, (err, result) => {
+        db.query(statement, (err, result) => {
             if (err) {
                 console.error("DB error when getting emails: ", err.message);
                 reject("DB ERROR: ", err.message);
