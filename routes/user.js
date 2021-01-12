@@ -50,10 +50,10 @@ function getUser(u_id) {
 function getEmailCheck(email) {
 
     return new Promise((resolve, reject) => {
-        const statement = "SELECT id_u FROM users WHERE email = $1";
+        const statement = "SELECT u_id FROM users WHERE email = $1";
         const values = [email]
 
-        db.query(statement, (err, result) => {
+        db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB error when getting emails: ", err.message);
                 reject("DB ERROR: ", err.message);
