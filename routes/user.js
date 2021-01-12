@@ -19,7 +19,7 @@ router.get("/", checkAuth, (req, res) => {
         })
 })
 
-router.get("/email", (req, res) => {
+router.post("/email", (req, res) => {
 
     console.log("Incomming mail: ", req.body)
 
