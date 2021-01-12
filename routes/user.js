@@ -22,8 +22,8 @@ router.get("/", checkAuth, (req, res) => {
 router.get("/email", (req, res) => {
 
     getEmailCheck(req.body.email)
-        .then(emails => {
-            res.status(200).json(emails);
+        .then(isRegistered => {
+            res.status(200).json(isRegistered);
         })
         .catch(err => {
             res.status(500).json({ message: "an error occured: " + err.message })
@@ -58,7 +58,12 @@ function getEmailCheck(email) {
                 console.error("DB error when getting emails: ", err.message);
                 reject("DB ERROR: ", err.message);
             } else {
-                resolve(result.rows)
+                if(result.rows.length > 0) {
+                    resolve("true")
+                } else {
+                    resolve("false")
+                }
+                
             }
         })
     })
