@@ -21,6 +21,8 @@ router.get("/", checkAuth, (req, res) => {
 
 router.get("/email", (req, res) => {
 
+    console.log("Incomming mail: ", req.body)
+
     getEmailCheck(req.body.email)
         .then(isRegistered => {
             res.status(200).json(isRegistered);
