@@ -21,9 +21,10 @@ router.get("/", checkAuth, (req, res) => {
 
 router.get("/emails", (req, res) => {
 
-    getAllEmails()
-        .then(emails => {
-            res.status(200).json(emails);
+
+    getEmailCheck()
+        .then(isRegistered => {
+            res.status(200).json(isRegistered);
         })
         .catch(err => {
             res.status(500).json({ message: "an error occured: " + err.message })
@@ -47,10 +48,11 @@ function getUser(u_id) {
     })
 }
 
-function getAllEmails() {
+function getEmailCheck() {
 
     return new Promise((resolve, reject) => {
         const statement = "SELECT email FROM users";
+        
 
         db.query(statement, (err, result) => {
             if (err) {
