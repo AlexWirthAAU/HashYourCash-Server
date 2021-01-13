@@ -16,13 +16,15 @@ const userRoutes = require('./routes/user');
 const forgotpw = require('./routes/forgotpw');
 const categories = require('./routes/categories');
 const wallets = require('./routes/wallets');
+const payments = require('./routes/payments');
 
-app.use("/register", registerRoutes)
-app.use("/login", loginRoutes)
-app.use("/user", userRoutes)
-app.use("/forgotpw", forgotpw)
-app.use("/categories", categories)
-app.use("/wallets", wallets)
+app.use("/register", registerRoutes);
+app.use("/login", loginRoutes);
+app.use("/user", userRoutes);
+app.use("/forgotpw", forgotpw);
+app.use("/categories", categories);
+app.use("/wallets", wallets);
+app.use("/payments", payments);
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
