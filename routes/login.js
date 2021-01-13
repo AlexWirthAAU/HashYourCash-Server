@@ -37,7 +37,7 @@ function getUserByEmail(password, email) {
                 return;
             } else {
                 if(result.rows.length > 1) {
-                    console.error("DB error (more than two pw): ", err.message)
+                    console.error("DB error (more than two pw)")
                     reject(err.message);
                 } else if (result.rows.length == 1) {
                     //User-Datensatz wurde gefunden: gehashte pwords vergleichen 
