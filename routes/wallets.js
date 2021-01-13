@@ -86,8 +86,7 @@ function deleteW(walletId){
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
-                console.log(u_id + "in function")
-                resolve("Wallet erstellt")
+                resolve("Wallet gelöscht")
             }
     }
         )})
