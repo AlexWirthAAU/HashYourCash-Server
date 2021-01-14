@@ -10,7 +10,7 @@ router.get("/:w_id", checkAuth, (req, res) => {
             res.status(200).json(data);
         })
         .catch(err => {
-            res.status(500).json({message: "an error occured: " + err.message});
+            res.status(500).json({ message: "an error occured: " + err.message });
         })
 });
 
@@ -19,10 +19,10 @@ router.post('/', checkAuth, (req, res) => {
 
     createP(payments)
         .then(result => {
-            res.status(200).json({message: result});
+            res.status(200).json({ message: result });
         })
         .catch(err => {
-            res.status(500).json({message: err});
+            res.status(500).json({ message: err });
         })
 });
 
@@ -31,21 +31,21 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 
     deleteP(paymentId)
         .then((data) => {
-            res.status(200).json({message: result});
+            res.status(200).json({ message: result });
         })
         .catch(err => {
-            res.status(500).json({message: "an error occured: " + err.message});
+            res.status(500).json({ message: "an error occured: " + err.message });
         })
 });
 
 router.post("/period", (req, res) => {
     //Middleware!!
-    getCategories()
-    .then((data) => {
-        console.log("DATA: ", data)
+    getPaymentsByDate(1, 1)
+    .then(result => {
+        console.log(result)
     })
     .catch(err => {
-        console.log("ERROR: ", err.message)
+        console.log(err.message)
     })
 })
 
@@ -95,24 +95,41 @@ function deleteP(paymentId) {
 }
 
 function getPaymentsByDate(period, walletId) {
-    
+
+    return new Promise((resolve, reject) => {
+        let cats = [];
+        let statisticsObj = new Object;
+        getCategories()
+            .then((data) => {
+                cats = data;
+                cats.forEach(cat => {
+                    statisticsObj(cat.name) = 0;
+                })
+                resolve(statisticsObj)
+            })
+            .catch(err => {
+                console.log("ERROR: ", err.message)
+                reject(err)
+            })
+    })
+
+
 
 
 
 
 }
 
-function getCategories () {
+function getCategories() {
     return new Promise((resolve, reject) => {
         const statement = "SELECT * FROM category"
 
         db.query(statement, (err, result) => {
-            if(err) {
+            if (err) {
                 console.error("DB ERROR WHEN ASKING FOR CATEGORIES: ", err.message);
                 reject(err.message)
             } else {
                 resolve(result.rows)
-                console.log("ALL CATS: ", result.rows)
             }
         })
     })
