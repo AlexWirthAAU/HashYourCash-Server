@@ -18,7 +18,7 @@ router.get('/', (req,res) => {
 function getAllCats(){
     return new Promise((resolve, reject) => {
         const statement = 
-        `SELECT name
+        `SELECT *
          FROM category 
          WHERE is_standard = true`;
 
