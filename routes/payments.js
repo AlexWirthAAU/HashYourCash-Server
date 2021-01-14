@@ -39,6 +39,7 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 });
 
 router.post("/period", (req, res) => {
+    //Middleware!!
     getCategories()
     .then((data) => {
         console.log("DATA: ", data)
@@ -105,7 +106,7 @@ function getCategories () {
     return new Promise((resolve, reject) => {
         const statement = "SELECT * FROM category"
 
-        db.query(statement, values, (err, result) => {
+        db.query(statement, (err, result) => {
             if(err) {
                 console.error("DB ERROR WHEN ASKING FOR CATEGORIES: ", err.message);
                 reject(err.message)
