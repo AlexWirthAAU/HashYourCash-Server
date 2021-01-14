@@ -128,15 +128,13 @@ function getPaymentsByDate(period, walletId) {
                         result.rows.forEach(payment => {
                             console.log("Payment: ", payment)
                             console.log("Payment2: ", payment.c_id)
+                            console.log("Statistics: ", statisticsObj)
+                            console.log("Statistics: ", statisticsObj[payment.c_id])
                             statisticsObj[payment.c_id].amount += payment.amount;
                         })
                         resolve(statisticsObj)
                     }
                 })
-
-
-
-                resolve(statisticsObj)
             })
             .catch(err => {
                 console.log("ERROR: ", err.message)
