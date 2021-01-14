@@ -126,6 +126,8 @@ function getPaymentsByDate(period, walletId) {
                     } else {
                         console.log("ALL PAYMENTS FOR THIS WALLET: ", result.rows);
                         result.rows.forEach(payment => {
+                            console.log("Payment: ", payment)
+                            console.log("Payment2: ", payment.c_id)
                             statisticsObj[payment.c_id].amount += payment.amount;
                         })
                         resolve(statisticsObj)
