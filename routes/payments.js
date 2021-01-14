@@ -116,8 +116,17 @@ function getPaymentsByDate(period, walletId) {
                     };
                 })
 
-                const statement = "SELECT amount, c_id FROM payments WHERE type = 'out' AND w_id = $1 AND entry_date >= $2 AND entry_date <= $3 ORDER BY c_id ASC"
-                const values = [walletId, period.fromdate, period.todate,]
+                var statement = "";
+                var values = [];
+
+                if(period.fromdate == "" || period.todate == "") {
+                    statement = "SELECT amount, c_id FROM payments WHERE type = 'out' AND w_id = $1 ORDER BY c_id ASC";
+                    values =  [walletId]
+                } else {
+                    statement = "SELECT amount, c_id FROM payments WHERE type = 'out' AND w_id = $1 AND entry_date >= $2 AND entry_date <= $3 ORDER BY c_id ASC";
+                    values = [walletId, period.fromdate, period.todate];
+                }
+
 
                 db.query(statement, values, (err, result) => {
                     if(err) {
@@ -127,10 +136,7 @@ function getPaymentsByDate(period, walletId) {
                         console.log("ALL PAYMENTS FOR THIS WALLET: ", result.rows);
                         result.rows.forEach(payment => {
                             console.log("Payment: ", payment)
-                            console.log("Payment2: ", payment.c_id)
-                            console.log("Statistics: ", statisticsObj)
-                            console.log("Statistics: ", statisticsObj[payment.c_id])
-                            statisticsObj[payment.c_id].amount += payment.amount;
+                            statisticsObj[payment.c_id].amount += parseFloat(payment.amount);
                         })
                         resolve(statisticsObj)
                     }
