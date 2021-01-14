@@ -17,10 +17,7 @@ router.get('/', (req,res) => {
 //not yet finished
 function getAllCats(){
     return new Promise((resolve, reject) => {
-        const statement = 
-        `SELECT *
-         FROM category 
-         WHERE is_standard = true`;
+        const statement = "SELECT * FROM category"
 
         db.query(statement, (err, result) => {
             if (err) {
