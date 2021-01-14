@@ -33,8 +33,8 @@ router.post('/', checkAuth, (req, res) => {
         })
 })
 
-router.delete("/", checkAuth, (req, res) => {
-    let walletId = req.body;
+router.delete("/:wallet", checkAuth, (req, res) => {
+    let walletId = req.params.wallet;
 
     deleteW(walletId)
         .then((data) => {
