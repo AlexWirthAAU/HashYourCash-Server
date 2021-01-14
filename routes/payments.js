@@ -38,12 +38,8 @@ router.delete("/:p_id", checkAuth, (req, res) => {
         })
 });
 
-router.post("/period/:w_id", (req, res) => {
-    //Middleware!!
-    let periode = {
-        fromdate: "2021-01-31",
-        todate: "2021-02-28",
-    }
+router.post("/period/:w_id", checkAuth, (req, res) => {
+    //Middleware!
     getPaymentsByDate(periode, 1)
     .then(result => {
         console.log(result)
@@ -51,6 +47,7 @@ router.post("/period/:w_id", (req, res) => {
     })
     .catch(err => {
         console.log(err.message)
+        res.status(500).json({ message: err.message });
     })
 })
 
