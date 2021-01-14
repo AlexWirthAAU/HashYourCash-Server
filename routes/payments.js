@@ -40,7 +40,11 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 
 router.post("/period", (req, res) => {
     //Middleware!!
-    getPaymentsByDate(1, 1)
+    let periode = {
+        fromdate: "2021-01-31",
+        todate: "2021-02-28",
+    }
+    getPaymentsByDate(periode, 1)
     .then(result => {
         console.log(result)
         res.status(200).json(result);
@@ -111,6 +115,25 @@ function getPaymentsByDate(period, walletId) {
                         'icon': cat.icon
                     };
                 })
+
+                const statement = "SELECT amount, c_id FROM payments WHERE type = 'out' AND walletId = $1 entry_date >= $2 AND entry_date <= $3 ORDER BY c_id ASC"
+                const values = [period.fromdate, period.todate, walletId]
+
+                db.query(statement, values, (err, result) => {
+                    if(err) {
+                        console.error("DB ERROR WHEN ASKING FOR PAYMENTS: ", err.message)
+                        reject(err)
+                    } else {
+                        console.log("ALL PAYMENTS FOR THIS WALLET: ", result.rows);
+                        result.rows.forEach(payment => {
+                            statisticsObj[payment.c_id].amount += payment.amount;
+                        })
+                        resolve(statisticsObj)
+                    }
+                })
+
+
+
                 resolve(statisticsObj)
             })
             .catch(err => {
