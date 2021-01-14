@@ -43,6 +43,7 @@ router.post("/period", (req, res) => {
     getPaymentsByDate(1, 1)
     .then(result => {
         console.log(result)
+        res.status(200).json(result);
     })
     .catch(err => {
         console.log(err.message)
