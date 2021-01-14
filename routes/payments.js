@@ -103,7 +103,7 @@ function getPaymentsByDate(period, walletId) {
             .then((data) => {
                 cats = data;
                 cats.forEach(cat => {
-                    statisticsObj(cat.name) = 0;
+                    statisticsObj[cat.name] = 0;
                 })
                 resolve(statisticsObj)
             })
