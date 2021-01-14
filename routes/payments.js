@@ -38,6 +38,16 @@ router.delete("/:p_id", checkAuth, (req, res) => {
         })
 });
 
+router.post("/period", checkAuth, (req, res) => {
+    getCategories()
+    .then((data) => {
+        console.log("DATA: ", data)
+    })
+    .catch(err => {
+        console.log("ERROR: ", err.message)
+    })
+})
+
 function createP(paymentData) {
     return new Promise((resolve, reject) => {
         const statement = "INSERT INTO payments (type, amount, description, comment, c_id, pe_id, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
@@ -82,5 +92,30 @@ function deleteP(paymentId) {
         })
     })
 }
+
+function getPaymentsByDate(period, walletId) {
+    
+
+
+
+
+}
+
+function getCategories () {
+    return new Promise((resolve, reject) => {
+        const statement = "SELECT * FROM category"
+
+        db.query(statement, values, (err, result) => {
+            if(err) {
+                console.error("DB ERROR WHEN ASKING FOR CATEGORIES: ", err.message);
+                reject(err.message)
+            } else {
+                resolve(result.rows)
+                console.log("ALL CATS: ", result.rows)
+            }
+        })
+    })
+}
+
 
 module.exports = router;
