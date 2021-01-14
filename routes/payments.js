@@ -117,7 +117,7 @@ function getPaymentsByDate(period, walletId) {
                 })
 
                 const statement = "SELECT amount, c_id FROM payments WHERE type = 'out' AND w_id = $1 AND entry_date >= $2 AND entry_date <= $3 ORDER BY c_id ASC"
-                const values = [period.fromdate, period.todate, walletId]
+                const values = [walletId, period.fromdate, period.todate,]
 
                 db.query(statement, values, (err, result) => {
                     if(err) {
