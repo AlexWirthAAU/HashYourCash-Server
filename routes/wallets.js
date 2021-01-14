@@ -81,7 +81,7 @@ function deleteW(walletId){
     return new Promise((resolve, reject) => {
         const statement = "DELETE FROM wallet WHERE w_id = $1";
         const values = [walletId];
-        db.query(statement, values, (err, result) => {
+        db.query(statement, values, (err) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
