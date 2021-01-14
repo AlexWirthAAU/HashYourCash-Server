@@ -38,7 +38,7 @@ router.delete("/:p_id", checkAuth, (req, res) => {
         })
 });
 
-router.post("/period", (req, res) => {
+router.post("/period/:w_id", (req, res) => {
     //Middleware!!
     let periode = {
         fromdate: "2021-01-31",
