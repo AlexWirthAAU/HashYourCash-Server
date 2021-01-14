@@ -38,7 +38,7 @@ router.delete("/:p_id", checkAuth, (req, res) => {
         })
 });
 
-router.post("/period", checkAuth, (req, res) => {
+router.post("/period", (req, res) => {
     getCategories()
     .then((data) => {
         console.log("DATA: ", data)
