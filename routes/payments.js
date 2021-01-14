@@ -40,7 +40,7 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 
 router.post("/period/:w_id", checkAuth, (req, res) => {
     //Middleware!
-    getPaymentsByDate(periode, 1)
+    getPaymentsByDate(req.body, 1)
     .then(result => {
         console.log(result)
         res.status(200).json(result);
