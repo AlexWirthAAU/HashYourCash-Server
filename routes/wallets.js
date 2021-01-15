@@ -47,8 +47,9 @@ router.delete("/:wallet", checkAuth, (req, res) => {
 
 router.put("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
+    let wallets = req.body;
 
-    deleteW(walletId)
+    editW(walletId, wallets)
         .then((result) => {
             res.status(200).json({ message: result });
         })
@@ -105,5 +106,20 @@ function deleteW(walletId){
 
 }
 
+function editW(walletId, walletData){
+    return new Promise((resolve, reject) => {
+        const statement = "UPDATE wallet SET name = $1, description = $2, amount = $3 WHERE w_id = $4";
+        const values = [walletData.name, walletData.description, walletData.amount, walletId];
+        db.query(statement, values, (err, result) => {
+            if (err) {
+                console.error("DB ERROR: ", err.message);
+                reject(err.message)
+            } else {
+                resolve("Wallet geändert")
+            }
+    }
+        )})
+
+}
 
 module.exports = router;
