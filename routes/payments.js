@@ -53,6 +53,7 @@ router.post("/period/:w_id", checkAuth, (req, res) => {
 router.post("/periodInOut/:w_id", checkAuth, (req, res) => {
     getInAndOuts(req.body, 1)
     .then(result => {
+        console.log(result)
         res.status(200).json(result);
     })
     .catch(err => {
@@ -139,7 +140,6 @@ function getPaymentsByDate(period, walletId) {
                         console.error("DB ERROR WHEN ASKING FOR PAYMENTS: ", err.message)
                         reject(err)
                     } else {
-                        console.log("ALL PAYMENTS FOR THIS WALLET: ", result.rows);
                         result.rows.forEach(payment => {
                             console.log("Payment: ", payment)
                             statisticsObj[payment.c_id].amount += parseFloat(payment.amount);
@@ -193,6 +193,7 @@ function getInAndOuts(period, walletID) {
                 console.error("DB ERREOR WHEN ASKING FOR IN AND OUTS")
                 reject(err.message)
             } else {
+                console.log(result.rows)
                 result.rows.forEach(payment => {
                     statisticsObj[payment.type] += parseFloat(payment.amount);
                 })
