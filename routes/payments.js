@@ -39,7 +39,6 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 });
 
 router.post("/period/:w_id", checkAuth, (req, res) => {
-    //Middleware!
     getPaymentsByDate(req.body, 1)
     .then(result => {
         console.log(result)
@@ -48,6 +47,16 @@ router.post("/period/:w_id", checkAuth, (req, res) => {
     .catch(err => {
         console.log(err.message)
         res.status(500).json({ message: err.message });
+    })
+})
+
+router.post("/periodInOut/:w_id", checkAuth, (req, res) => {
+    getInAndOuts(req.body, 1)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(err => {
+        res.status(500).json({ message: err.message})
     })
 })
 
@@ -144,12 +153,6 @@ function getPaymentsByDate(period, walletId) {
                 reject(err)
             })
     })
-
-
-
-
-
-
 }
 
 function getCategories() {
@@ -164,6 +167,40 @@ function getCategories() {
                 resolve(result.rows)
             }
         })
+    })
+}
+
+function getInAndOuts(period, walletID) {
+    return new Promise((resolve, reject) => {
+
+        var statement = "";
+        var values = [];
+        var statisticsObj = {
+            "in": 0,
+            "out": 0,
+        };
+
+        if(period.fromdate == "" || period.todate == "") {
+            statement = "SELECT amount, type FROM payments WHERE w_id = $1 ORDER BY c_id ASC";
+            values =  [walletID]
+        } else {
+            statement = "SELECT amount, type FROM payments WHERE w_id = $1 AND entry_date >= $2 AND entry_date <= $3 ORDER BY c_id ASC";
+            values = [walletID, period.fromdate, period.todate];
+        }
+
+        db.query(statement, values, (err, result) => {
+            if(err) {
+                console.error("DB ERREOR WHEN ASKING FOR IN AND OUTS")
+                reject(err.message)
+            } else {
+                result.rows.forEach(payment => {
+                    statisticsObj[payment.type] += parseFloat(payment.amount);
+                })
+                resolve(statisticsObj)
+            }
+        })
+
+        
     })
 }
 
