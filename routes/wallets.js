@@ -37,7 +37,19 @@ router.delete("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
 
     deleteW(walletId)
-        .then((data) => {
+        .then((result) => {
+            res.status(200).json({ message: result });
+        })
+        .catch(err => {
+            res.status(500).json({ message: "an error occured: " + err.message });
+        })
+})
+
+router.put("/:wallet", checkAuth, (req, res) => {
+    let walletId = req.params.wallet;
+
+    deleteW(walletId)
+        .then((result) => {
             res.status(200).json({ message: result });
         })
         .catch(err => {
@@ -81,7 +93,7 @@ function deleteW(walletId){
     return new Promise((resolve, reject) => {
         const statement = "DELETE FROM wallet WHERE w_id = $1";
         const values = [walletId];
-        db.query(statement, values, (err) => {
+        db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
