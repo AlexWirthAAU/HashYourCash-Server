@@ -38,6 +38,7 @@ router.delete("/:p_id", checkAuth, (req, res) => {
 });
 
 router.post("/period/:w_id", checkAuth, (req, res) => {
+    console.log("PARAMETER: " + req.params.w_id);
     getPaymentsByDate(req.body, req.params.w_id)
     .then(result => {
         console.log(result)
