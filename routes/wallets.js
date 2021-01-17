@@ -37,7 +37,20 @@ router.delete("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
 
     deleteW(walletId)
-        .then((data) => {
+        .then((result) => {
+            res.status(200).json({ message: result });
+        })
+        .catch(err => {
+            res.status(500).json({ message: "an error occured: " + err.message });
+        })
+})
+
+router.put("/:wallet", checkAuth, (req, res) => {
+    let walletId = req.params.wallet;
+    let wallets = req.body;
+
+    editW(walletId, wallets)
+        .then((result) => {
             res.status(200).json({ message: result });
         })
         .catch(err => {
@@ -81,7 +94,7 @@ function deleteW(walletId){
     return new Promise((resolve, reject) => {
         const statement = "DELETE FROM wallet WHERE w_id = $1";
         const values = [walletId];
-        db.query(statement, values, (err) => {
+        db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
@@ -93,5 +106,20 @@ function deleteW(walletId){
 
 }
 
+function editW(walletId, walletData){
+    return new Promise((resolve, reject) => {
+        const statement = "UPDATE wallet SET name = $1, description = $2, amount = $3 WHERE w_id = $4";
+        const values = [walletData.name, walletData.description, walletData.amount, walletId];
+        db.query(statement, values, (err, result) => {
+            if (err) {
+                console.error("DB ERROR: ", err.message);
+                reject(err.message)
+            } else {
+                resolve("Wallet geändert")
+            }
+    }
+        )})
+
+}
 
 module.exports = router;

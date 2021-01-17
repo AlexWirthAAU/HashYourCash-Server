@@ -15,9 +15,8 @@ router.get("/:w_id", checkAuth, (req, res) => {
 });
 
 router.post('/', checkAuth, (req, res) => {
-    let payments = req.body;
-
-    createP(payments)
+    let payment = req.body;
+    createP(payment)
         .then(result => {
             res.status(200).json({ message: result });
         })
@@ -63,7 +62,7 @@ router.post("/periodInOut/:w_id", checkAuth, (req, res) => {
 
 function createP(paymentData) {
     return new Promise((resolve, reject) => {
-        const statement = "INSERT INTO payments (type, amount, description, comment, c_id, pe_id, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
+        const statement = "INSERT INTO payments (type, amount, description, comment, pe_id, w_id, c_id, entry_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
         db.query(statement, Object.values(paymentData), (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
@@ -76,7 +75,10 @@ function createP(paymentData) {
 }
 
 function showP(w_id) {
-    const statement = "SELECT * FROM payments WHERE w_id = $1 ORDER BY entry_date ASC";
+    const statement = `SELECT * FROM payments p
+LEFT JOIN category c ON p.c_id = c.c_id
+WHERE p.w_id = $1 
+ORDER BY p.entry_date ASC`;
     const values = [w_id];
 
     return new Promise((resolve, reject) => {
