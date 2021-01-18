@@ -44,7 +44,9 @@ router.post('/', checkAuth, (req, res) => {
 
 router.post('/:w_id', checkAuth, (req, res) => {
     let firstP = req.body;
+    walletId = req.params.w_id
 
+    changeStatus(walletId, firstP)
     initialP(firstP)
         .then(result => {
             res.status(200).json({ message: result });
@@ -148,6 +150,22 @@ function editW(walletId, walletData) {
     return new Promise((resolve, reject) => {
         const statement = "UPDATE wallet SET name = $1, description = $2, amount = $3 WHERE w_id = $4";
         const values = [walletData.name, walletData.description, walletData.amount, walletId];
+        db.query(statement, values, (err, result) => {
+            if (err) {
+                console.error("DB ERROR: ", err.message);
+                reject(err.message)
+            } else {
+                resolve("Wallet geändert")
+            }
+        })
+    })
+
+}
+
+function changeStatus(walletId, firstP) {
+    return new Promise((resolve, reject) => {
+        const statement = "UPDATE wallet SET is_initiated = $1 WHERE w_id = $2";
+        const values = [firstP.is_initiated, walletId];
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
