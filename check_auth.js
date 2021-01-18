@@ -46,7 +46,7 @@ function checkAuth(token, req) {
                             } else {
                                 console.log("-----CHECK PARAMS--------: ", req.params)
                                 if (req.params.w_id) {
-                                    const stmt = "SELECT * FROM wallets WHERE u_id = $1 AND w_id = $2";
+                                    const stmt = "SELECT * FROM wallet WHERE u_id = $1 AND w_id = $2";
                                     const vals = [data.u_id, req.params.w_id]
 
                                     db.query(stmt, vals, (err, result) => {
