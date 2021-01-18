@@ -82,7 +82,7 @@ router.put("/:wallet", checkAuth, (req, res) => {
 
 function showW(u_id) {
 
-    const statement = "SELECT w_id, name, description, amount, isInitiated FROM wallet WHERE u_id = $1";
+    const statement = "SELECT w_id, name, description, amount, is_initiated FROM wallet WHERE u_id = $1";
     const values = [u_id];
 
     return new Promise((resolve, reject) => {
