@@ -44,7 +44,6 @@ function checkAuth(token, req) {
                             if (result.rows.length != 1) {
                                 reject("AUTHENTICATION FAILED")
                             } else {
-                                console.log("-----CHECK PARAMS--------: ", req.params)
                                 if (req.params.w_id) {
                                     const stmt = "SELECT * FROM wallet WHERE u_id = $1 AND w_id = $2";
                                     const vals = [data.u_id, req.params.w_id]
