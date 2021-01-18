@@ -24,12 +24,12 @@ app.use("/user", userRoutes);
 app.use("/forgotpw", forgotpw);
 app.use("/categories", categories);
 app.use("/wallets", wallets);
-app.use("/payments", payments);
+app.use("/payments", payments.router);
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
     res.send("Hello world!");
-})
+});
 
 
 const PORT = process.env.PORT || config.server.port;
@@ -38,7 +38,7 @@ db.initializeDB.then(() => {
         console.log("Listening on Port " + PORT)
     });
 },
-()=> {console.log("Failed to connect to DB!")})
+()=> {console.log("Failed to connect to DB!")});
 
 
-console.log("Server is working")
+console.log("Server is working");
