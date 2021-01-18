@@ -163,7 +163,6 @@ function getPaymentsByDate(period, walletId) {
                         reject(err)
                     } else {
                         result.rows.forEach(payment => {
-                            console.log("Payment: ", payment);
                             statisticsObj[payment.c_id].amount += parseFloat(payment.amount);
                         });
                         resolve(statisticsObj)
@@ -215,7 +214,6 @@ function getInAndOuts(period, walletID) {
                 console.error("DB ERREOR WHEN ASKING FOR IN AND OUTS");
                 reject(err.message)
             } else {
-                console.log(result.rows);
                 result.rows.forEach(payment => {
                     statisticsObj[payment.type] += parseFloat(payment.amount);
                 });
