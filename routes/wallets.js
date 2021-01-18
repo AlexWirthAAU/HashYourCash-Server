@@ -11,7 +11,6 @@ router.get("/", checkAuth, (req, res) => {
 
     showW(req.headers.u_id)
         .then((data) => {
-            data.isInitiated = false;
             res.status(200).json(data);
         })
         .catch(err => {
@@ -48,7 +47,6 @@ router.post('/:w_id', checkAuth, (req, res) => {
 
     initialP(firstP)
         .then(result => {
-            result.isInitiated = true;
             res.status(200).json({ message: result });
         })
         .catch(err => {
