@@ -39,10 +39,8 @@ router.delete("/:p_id/:w_id", checkAuth, (req, res) => {
 });
 
 router.post("/period/:w_id", checkAuth, (req, res) => {
-    console.log("PARAMETER: " + req.params.w_id);
     getPaymentsByDate(req.body, req.params.w_id)
         .then(result => {
-            console.log(result);
             res.status(200).json(result);
         })
         .catch(err => {
@@ -54,10 +52,10 @@ router.post("/period/:w_id", checkAuth, (req, res) => {
 router.post("/periodInOut/:w_id", checkAuth, (req, res) => {
     getInAndOuts(req.body, req.params.w_id)
         .then(result => {
-            console.log(result);
             res.status(200).json(result);
         })
         .catch(err => {
+            console.error(err.message);
             res.status(500).json({message: err.message})
         })
 });
