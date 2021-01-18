@@ -11,6 +11,7 @@ router.get("/", checkAuth, (req, res) => {
 
     showW(req.headers.u_id)
         .then((data) => {
+            data.isInitiated = false;
             res.status(200).json(data);
         })
         .catch(err => {
@@ -35,7 +36,6 @@ router.post('/', checkAuth, (req, res) => {
 
     createW(wallets, userId)
         .then(result => {
-            result.isInitiated = false;
             res.status(200).json({message: result});
         })
         .catch(err => {
