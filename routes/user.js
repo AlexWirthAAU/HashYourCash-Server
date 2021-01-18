@@ -17,7 +17,7 @@ router.get("/", checkAuth, (req, res) => {
         .catch(err => {
             res.status(500).json({ message: "an error occured: " + err.message });
         })
-})
+});
 
 router.get("/emails", (req, res) => {
 
@@ -29,7 +29,7 @@ router.get("/emails", (req, res) => {
         .catch(err => {
             res.status(500).json({ message: "an error occured: " + err.message })
         })
-})
+});
 
 function getUser(u_id) {
 
