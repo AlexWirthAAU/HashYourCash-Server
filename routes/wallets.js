@@ -164,8 +164,9 @@ function editW(walletId, walletData) {
 
 function initialP(firstP) {
     return new Promise((resolve, reject) => {
-        const statement = "INSERT INTO payments (type, amount, description, comment, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6)";
-        db.query(statement, Object.values(firstP), (err, result) => {
+        const statement = "INSERT INTO payments (type, amount, description, comment, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6)"
+        const values = [firstP.type, firstP.amount, firstP.description, firstP.comment, firstP.w_id, firstP.entry_date];
+        db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
