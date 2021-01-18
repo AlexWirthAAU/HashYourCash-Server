@@ -35,6 +35,7 @@ router.post('/', checkAuth, (req, res) => {
 
     createW(wallets, userId)
         .then(result => {
+            result.isInitiated = false;
             res.status(200).json({message: result});
         })
         .catch(err => {
@@ -47,6 +48,7 @@ router.post('/:w_id', checkAuth, (req, res) => {
 
     initialP(firstP)
         .then(result => {
+            result.isInitiated = true;
             res.status(200).json({ message: result });
         })
         .catch(err => {
