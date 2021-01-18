@@ -42,6 +42,18 @@ router.post('/', checkAuth, (req, res) => {
         })
 });
 
+router.post('/:w_id', checkAuth, (req, res) => {
+    let firstP = req.body;
+
+    initialP(firstP)
+        .then(result => {
+            res.status(200).json({ message: result });
+        })
+        .catch(err => {
+            res.status(500).json({ message: err });
+        })
+})
+
 router.delete("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
 
@@ -132,8 +144,6 @@ function deleteP(walletId){
 
 }
 
-
-
 function editW(walletId, walletData) {
     return new Promise((resolve, reject) => {
         const statement = "UPDATE wallet SET name = $1, description = $2, amount = $3 WHERE w_id = $4";
@@ -148,6 +158,21 @@ function editW(walletId, walletData) {
         })
     })
 
+}
+
+function initialP(firstP) {
+    return new Promise((resolve, reject) => {
+        const statement = "INSERT INTO payments (type, amount, description, comment, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6)"
+        const values = [firstP.type, firstP.amount, firstP.description, firstP.comment, firstP.w_id, firstP.entry_date];
+        db.query(statement, values, (err, result) => {
+            if (err) {
+                console.error("DB ERROR: ", err.message);
+                reject(err.message)
+            } else {
+                resolve("Wallet wurde initialisiert")
+            }
+        })
+    })
 }
 
 module.exports = router;
