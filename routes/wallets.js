@@ -11,8 +11,13 @@ router.get("/", checkAuth, (req, res) => {
 
     showW(req.headers.u_id)
         .then((data) => {
-            data.isInitiated = false;
-            res.status(200).json(data);
+            res.status(200).json({
+                w_id: data.w_id, 
+                name: data.name, 
+                description: data.description, 
+                amount: data.amount,
+                isInitiated: false
+            });
         })
         .catch(err => {
             res.status(500).json({message: "an error occured: " + err.message});
