@@ -57,7 +57,6 @@ router.post('/:w_id', checkAuth, (req, res) => {
 router.delete("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
 
-    deleteW(walletId)
     deleteP(walletId)
         .then((result) => {
             res.status(200).json({message: result});
@@ -143,8 +142,6 @@ function deleteP(walletId){
         )})
 
 }
-
-
 
 function editW(walletId, walletData) {
     return new Promise((resolve, reject) => {
