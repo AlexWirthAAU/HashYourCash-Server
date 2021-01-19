@@ -79,12 +79,14 @@ function updateWalletAmount(walletId) {
 
 function createP(paymentData) {
     return new Promise((resolve, reject) => {
+        console.log("*****************DEBUG***********")
         let statement = "INSERT INTO payments (type, amount, description, comment, pe_id, w_id, c_id, entry_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
         db.query(statement, Object.values(paymentData), (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
+                console.log("RESULT: ", result)
                 resolve(result)
             }
         })
