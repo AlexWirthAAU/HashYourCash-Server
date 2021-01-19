@@ -250,9 +250,12 @@ function calcWalletAmounts(walletId) {
                 console.error("DB ERROR: ", err.message);
                 reject(err.message)
             } else {
+                console.log("RESULT DEBUG: ", result.rows)
                 const amounts = {};
                 amounts.in = parseInt(result.rows.filter(row => row['type'] === 'in')[0]['amount']);
-                amounts.out = parseInt(result.rows.filter(row => row['type'] === 'out')[0]['amount']);
+                if((result.rows.filter(row => row['type'] === 'out')).length > 0) {
+                    amounts.out = parseInt(result.rows.filter(row => row['type'] === 'out')[0]['amount']);
+                }
                 amounts.total = parseInt(result.rows.filter(row => row['type'] === 'total')[0]['amount']);
                 resolve(amounts)
             }
