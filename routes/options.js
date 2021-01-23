@@ -44,52 +44,27 @@ function changePw(passData, u_id) {
         }
         if(result_hash) {
             return new Promise((resolve, reject) => {
-                const statement = "UPDATE users SET u_password = $1 WHERE u_id = $2";
-                const values = [hash, u_id];
-                db.query(statement, values, (err, mailResponse) => {
+                bcryptjs.hash(passData.newPw, saltRounds, function (err, hash) {
                     if (err) {
-                        console.error("DB ERROR: ", err.message);
+                        console.error("ERROR WITH HASHING", err.message)
                         reject(err.message)
                     } else {
-                        bcryptjs.hash(passData.newPw, saltRounds, function (err, hash) {
+                        const statement = "UPDATE users SET u_password = $1 WHERE u_id = $2";
+                        const values = [hash, u_id];
+                        db.query(statement, values, (err, result) => {
                             if (err) {
-                                console.error("ERROR WITH HASHING", err.message)
+                                console.error("DB ERROR: ", err.message);
                                 reject(err.message)
                             } else {
-                                const statement = "UPDATE users SET u_password = $1 WHERE u_id = $2";
-                                const values = [hash, u_id];
-                                db.query(statement, values, (err, result) => {
-                                    if (err) {
-                                        console.error("DB ERROR: ", err.message);
-                                        reject(err.message)
-                                    } else {
-                                        const emailMessage = {
-                                            to: mailResponse.email,
-                                            from: 'hashyourcash@gmail.com',
-                                            subject: 'Passwort wurde geändert!',
-                                            html: '<h2><strong>Dein Passwort wurde gerade geändert!</strong></h2><p>Falls du dein Passwort nicht geändert haben solltest, dann setze es schnellstmöglich unter folgendem Link zurück:</p><p><a title="HashYourCash Passwort Zurücksetzen" href="https://hashyourcashapp.herokuapp.com/forgotpw">https://hashyourcashapp.herokuapp.com</a></p><p><em>Falls du Schwierigkeiten haben solltest melde dich bei uns: hashyourcash@gmail.com!</em></p>'
-                                        };
-                
-                                        sgMail.send(emailMessage)
-                                        .then(res => {
-                                            resolve("User informed PW change")
-                                        })
-                                        .catch(err => {
-                                            reject("EMAIL NOT SENT ", err.message)
-                                        })
-                                    }
-                                })
+                                resolve("Passwort geändert")
                             }
-                        })   
+                        })
                     }
-                    })
-                })}
-         else {
-            //Passwort stimmt nicht mit eingegebenen überein
-            reject("Passwords do not Match")
-         }
-
-})}
+                })
+            })
+        }
+    })
+}
 
 function changeMail(mailData, u_id) {
     return new Promise((resolve, reject) => {
