@@ -62,6 +62,8 @@ function changePw(passData, u_id) {
                     }
                 })
             })
+        } else {
+            reject("Passwort stimmt nicht überein")
         }
     })
 }
