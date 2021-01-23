@@ -44,7 +44,7 @@ router.post('/', checkAuth, (req, res) => {
 
 router.post('/:w_id', checkAuth, (req, res) => {
     let firstP = req.body;
-    walletId = req.params.w_id
+    let walletId = req.params.w_id
 
     changeStatus(walletId, firstP)
     initialP(firstP)

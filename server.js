@@ -26,7 +26,7 @@ app.use("/forgotpw", forgotpw);
 app.use("/categories", categories);
 app.use("/wallets", wallets);
 app.use("/payments", payments.router);
-app.use("options", options);
+app.use("/options", options);
 
 app.get("/", (req, res) => {
     console.log("Received Standard Request");
