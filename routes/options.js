@@ -59,7 +59,7 @@ function changePw(passData, u_id) {
                                 console.error("DB ERROR: ", err.message);
                                 reject(err.message)
                             } else {
-                                resolve("Passwort geändert");
+                                resolve("Passwort geändert")
                             }
                         })
                     }
