@@ -6,10 +6,10 @@ const checkAuth = require('../check_auth');
 
 
 router.post('/mail', checkAuth, (req, res) => {
-    let newMail = req.body;
+    let mailData = req.body;
     let userId = req.headers.u_id;
 
-    changeMail(newMail, userId)
+    changeMail(mailData, userId)
         .then(result => {
             res.status(200).json({message: result});
         })
@@ -18,10 +18,10 @@ router.post('/mail', checkAuth, (req, res) => {
         })
 });
 
-function changeMail(mail, u_id) {
+function changeMail(mailData, u_id) {
     return new Promise((resolve, reject) => {
         const statement = "UPDATE users SET email = $1 WHERE u_id = $2";
-        const values = [mail, u_id];
+        const values = [mailData.newMail, u_id];
         db.query(statement, values, (err, result) => {
             if (err) {
                 console.error("DB ERROR: ", err.message);
