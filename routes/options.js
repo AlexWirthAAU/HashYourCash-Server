@@ -37,11 +37,13 @@ router.post('/password', checkAuth, (req, res) => {
 });
 
 function changePw(passData, u_id) {
+    console.log("passData:" + passData);
     bcryptjs.compare(passData.oldPw, passData.currentPw, function(err, result_hash) {
         if(err) {
             console.error("Hashing error: ", err.message)
             reject(err.message);
         }
+        console.log("resultHash:" + result_hash);
         if(result_hash) {
             return new Promise((resolve, reject) => {
                 bcryptjs.hash(passData.newPw, saltRounds, function (err, hash) {
@@ -49,6 +51,7 @@ function changePw(passData, u_id) {
                         console.error("ERROR WITH HASHING", err.message)
                         reject(err.message)
                     } else {
+                        console.log("hash:" + hash)
                         const statement = "UPDATE users SET u_password = $1 WHERE u_id = $2";
                         const values = [hash, u_id];
                         db.query(statement, values, (err, result) => {
@@ -56,6 +59,7 @@ function changePw(passData, u_id) {
                                 console.error("DB ERROR: ", err.message);
                                 reject(err.message)
                             } else {
+                                console.log("result" + result)
                                 resolve("Passwort geändert")
                             }
                         })
