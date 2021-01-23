@@ -60,7 +60,6 @@ function changePw(passData, u_id) {
                                 reject(err.message)
                             } else {
                                 resolve("Passwort geändert");
-                                console.log("result" + json(result));
                             }
                         })
                     }
