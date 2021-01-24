@@ -56,9 +56,22 @@ function changePw(passData, u_id) {
                                 console.error("DB ERROR: ", err.message);
                                 reject(err.message)
                             } else {
-                                resolve({
-                                    message: "Passwort geändert",
-                                    pw: hash
+                                const emailMessage = {
+                                    to: passData.email,
+                                    from: 'hashyourcash@gmail.com',
+                                    subject: 'Passwort wurde geändert!',
+                                    html: '<h2><strong>Dein Passwort wurde gerade geändert!</strong></h2><p> Falls du deine Daten nicht geändert haben solltest, dann setze schnellstmöglich dein Passwort zurück. Folge dazu diesem Link:</p><p><a title="HashYourCash Passwort zurücksetzen" href="https://hashyourcashapp.herokuapp.com/forgotpw">https://hashyourcashapp.herokuapp.com</a></p><p>Falls es zu Problemen kommen sollte, dann melde dich per Mail bei uns:</p><p>hashyourcash@gmail.com</p><p>Dein HashYourCash Team</p>'
+                                };
+        
+                                sgMail.send(emailMessage)
+                                .then(res => {
+                                    resolve({
+                                        message: "Passwort geändert",
+                                        pw: hash
+                                    })
+                                })
+                                .catch(err => {
+                                    reject("EMAIL NOT SENT ", err.message)
                                 })
                             }
                         })
