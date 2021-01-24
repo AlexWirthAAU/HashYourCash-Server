@@ -29,7 +29,7 @@ router.post('/password', checkAuth, (req, res) => {
 
     changePw(passData, userId)
         .then(result => {
-            res.status(200).json({message: result});
+            res.status(200).json(result);
         })
         .catch(err => {
             res.status(500).json({message: err});
