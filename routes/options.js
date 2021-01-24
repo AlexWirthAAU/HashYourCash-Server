@@ -37,6 +37,7 @@ router.post('/password', checkAuth, (req, res) => {
 });
 
 function changePw(passData, u_id) {
+    return new Promise((resolve, reject) => {
     console.log("passData:" + passData);
     bcryptjs.compare(passData.oldPw, passData.currentPw, function(err, result_hash) {
         if(err) {
@@ -45,7 +46,6 @@ function changePw(passData, u_id) {
         }
         console.log("resultHash:" + result_hash);
         if(result_hash) {
-            return new Promise((resolve, reject) => {
                 bcryptjs.hash(passData.newPw, saltRounds, function (err, hash) {
                     if (err) {
                         console.error("ERROR WITH HASHING", err.message)
@@ -64,11 +64,12 @@ function changePw(passData, u_id) {
                         })
                     }
                 })
-            })
-        } else {
+            }
+        else {
             reject("Passwort stimmt nicht überein")
         }
     })
+})
 }
 
 function changeMail(mailData, u_id) {
