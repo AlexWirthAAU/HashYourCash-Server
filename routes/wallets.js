@@ -7,8 +7,9 @@ const getDb = require("../database").getDb;
 const db = getDb();
 const checkAuth = require('../check_auth');
 
-router.get("/", checkAuth, (req, res) => {
 
+//Abfrage aller Wallets
+router.get("/", checkAuth, (req, res) => {
     showW(req.headers.u_id)
         .then((data) => {
             res.status(200).json(data);
@@ -29,6 +30,7 @@ router.get('/:w_id/amounts', checkAuth, (req, res) => {
         })
 });
 
+//neues Wallet erstellen
 router.post('/', checkAuth, (req, res) => {
     let wallets = req.body;
     let userId = req.headers.u_id;
@@ -42,6 +44,7 @@ router.post('/', checkAuth, (req, res) => {
         })
 });
 
+//Wallet initialisieren mit Wallet amount
 router.post('/:w_id', checkAuth, (req, res) => {
     let firstP = req.body;
     let walletId = req.params.w_id
@@ -56,6 +59,7 @@ router.post('/:w_id', checkAuth, (req, res) => {
         })
 })
 
+//Wallet löschen
 router.delete("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
 
@@ -69,6 +73,7 @@ router.delete("/:wallet", checkAuth, (req, res) => {
         })
 });
 
+//Wallet bearbeiten
 router.put("/:wallet", checkAuth, (req, res) => {
     let walletId = req.params.wallet;
     let wallets = req.body;
@@ -82,8 +87,8 @@ router.put("/:wallet", checkAuth, (req, res) => {
         })
 });
 
+//Rückgabe alle Wallets der user id
 function showW(u_id) {
-
     const statement = "SELECT w_id, name, description, amount, is_initiated FROM wallet WHERE u_id = $1";
     const values = [u_id];
 
@@ -99,6 +104,7 @@ function showW(u_id) {
     })
 }
 
+//neuer Eintrag in Wallet Table mit Daten und user id 
 function createW(walletsData, u_id) {
     return new Promise((resolve, reject) => {
         const statement = "INSERT INTO wallet (u_id, name, description, amount) VALUES ($1, $2, $3, $4)";
@@ -114,6 +120,7 @@ function createW(walletsData, u_id) {
     })
 }
 
+//Löschanfrage um Wallet zu löschen
 function deleteW(walletId) {
     return new Promise((resolve, reject) => {
         const statement = "DELETE FROM wallet WHERE w_id = $1";
@@ -130,6 +137,7 @@ function deleteW(walletId) {
 
 }
 
+//Löschung aller Payments aus der DB mit gegebener Wallet id
 function deleteP(walletId){
     return new Promise((resolve, reject) => {
         const statement = "DELETE FROM payments WHERE w_id = $1";
@@ -146,6 +154,7 @@ function deleteP(walletId){
 
 }
 
+//Wallet bearbeiten mit neuen Werten 
 function editW(walletId, walletData) {
     return new Promise((resolve, reject) => {
         const statement = "UPDATE wallet SET name = $1, description = $2, amount = $3 WHERE w_id = $4";
@@ -162,6 +171,7 @@ function editW(walletId, walletData) {
 
 }
 
+//Wallet von nicht initialisiert auf initialisiert setzen
 function changeStatus(walletId, firstP) {
     return new Promise((resolve, reject) => {
         const statement = "UPDATE wallet SET is_initiated = $1 WHERE w_id = $2";
@@ -178,6 +188,7 @@ function changeStatus(walletId, firstP) {
 
 }
 
+//erste Zahlung auf das Wallet verbuchen 
 function initialP(firstP) {
     return new Promise((resolve, reject) => {
         const statement = "INSERT INTO payments (type, amount, description, comment, w_id, entry_date) VALUES($1, $2, $3, $4, $5, $6)"
