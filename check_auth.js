@@ -3,6 +3,15 @@ const jwt = require('jsonwebtoken');
 const getDb = require("./database").getDb;
 const db = getDb();
 
+/**
+ * @AlexWirthAAU
+ * Middleare um Authentification durch zu führen. Dazu wird der Token aus dem Header verwendet. Die UserID wird in der req. gespeichert 
+ * und kann folglich verwendet werden. 
+ * Außerdem wird hier schon überprüft ob der User auf die wallet mit der mitgesendet ID zugreifen darf. Diese Überprüfung muss dann nicht 
+ * mehr in all den anderen requests bezüglich Wallets & Payments durchgeführt werden. Man kann also nicht einfach eine request bezüglich einer x-beliebigen
+ * Wallet stellen, wenn mir diese nicht gehört.
+ */
+
 module.exports = (req, res, next) => {
     const token = req.headers.authorization;
 

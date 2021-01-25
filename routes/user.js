@@ -1,5 +1,6 @@
-/*
-@AlexWirthAAU
+/**
+ * @AlexWirthAAU
+ * Liefert UserDaten und alle bereits regsitrierten E-Mails.
 */
 
 const express = require('express');

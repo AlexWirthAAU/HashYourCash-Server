@@ -1,4 +1,10 @@
-//Zoë
+/**
+ * @All
+ * 
+ * Server der mittels REST-Api mit dem Front-End kommuniziert und direkt auf die DB zugreifen kann. (Siehe database.js)
+ * In den jeweiligen Modulen wurde darauf geachtet asynchron zu arbeiten um Event-Loop nicht zu blockieren und mehrere, zeitgleiche 
+ * Requests bearbeiten zu können.
+ */
 let config = require('./config.json');
 const db = require('./database');
 let express = require('express');
@@ -33,6 +39,10 @@ app.get("/", (req, res) => {
     res.send("Hello world!");
 });
 
+/**
+ * @zoehaack
+ * Initialisierung des Servers
+ */
 
 const PORT = process.env.PORT || config.server.port;
 db.initializeDB.then(() => {

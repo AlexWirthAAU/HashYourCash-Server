@@ -1,5 +1,7 @@
-/*@AlexWirthAAU
-    Routen zur Abhandlung der registration.  
+/**
+ * @AlexWirthAAU
+ * Routen zur Abhandlung der Registrierung.  
+ * E-Mail wird mittels Sendgrif gesendet. 
 */
 const express = require('express');
 const router = express.Router();
@@ -27,11 +29,13 @@ router.post('/', (req, res) => {
 function register(data) {
 
     return new Promise((resolve, reject) => {
+        //Passwort wird gehashed
         bcryptjs.hash(data.password, saltRounds, function (err, hash) {
             if (err) {
                 console.error("ERROR WITH HASHING", err.message)
                 reject(err.message)
             } else {
+                //Nutzerdaten werden in DB gespeichert
                 const statement = "INSERT INTO users (email, u_password, first_name, last_name) VALUES ($1, $2, $3, $4)";
                 const values = [data.email, hash, data.first_name, data.last_name,];
 
@@ -40,7 +44,7 @@ function register(data) {
                         console.error("DB ERROR: ", err.message);
                         reject(err.message)
                     } else {
-
+                        //Nutzer wird über erfolgreiche Registrierung informiert
                         const emailMessage = {
                             to: data.email,
                             from: 'hashyourcash@gmail.com',

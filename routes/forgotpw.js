@@ -1,5 +1,8 @@
-/*@AlexWirthAAU
-    Routen zur Abhandlung der registration.  
+/**
+ * @AlexWirthAAU
+ * Routen zur Abhandlung der PW-Änderung.  
+ * Zum Hashen der Passwörter werden bcrypt.js und 10 saltrounds verwendet.
+ * SendgridEmails zum senden von Emails von eigenem G-Mail Account.
 */
 const express = require('express');
 const router = express.Router();
@@ -13,7 +16,7 @@ const db = getDb();
 sgMail.setApiKey(cfg.sendgrid.key);
 
 router.post('/request', (req, res) => {
-    //User stellt die Anfrage das Passwort zu ändern --> Bekommt eine Email mit token zum ändern des Passwortes
+    //User stellt die Anfrage das Passwort zu ändern --> Bekommt eine Email mit token zum ändern des Passwortes (hält 30 Minuten)
 
     let email = req.body.email;
     console.log(req.body)
@@ -30,7 +33,7 @@ router.post('/request', (req, res) => {
 })
 
 router.post('/reset', (req, res) => {
-    //User kann über den Link aus der E-Mail (enthält token) sein Passwort ändern
+    //User kann über den Link aus der E-Mail (enthält token) sein Passwort ändern. App verifiziert den Token 
 
     let password = req.body.password;
     let token = req.body.token;

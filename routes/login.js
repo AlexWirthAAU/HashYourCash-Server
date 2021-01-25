@@ -1,5 +1,6 @@
-/*@AlexWirthAAU
-    Routen zur Abhandlung der logins.  
+/**
+ * @AlexWirthAAU
+ * Routen zur Abhandlung der logins.  
 */
 
 const express = require('express');
@@ -14,7 +15,6 @@ router.post('/', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
-    //Datenbank-Abfrage wird async. abgehandelt um mehrere Requests zum gleichen Zeitpunkt zu ermöglichen
     getUserByEmail(password, email)
         .then(result => {
             res.status(200).json(result)
