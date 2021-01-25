@@ -5,6 +5,7 @@ const router = express.Router();
 const getDb = require("../database").getDb;
 const db = getDb();
 
+//alle Kategorien aus der DB abrufen
 router.get('/', (req,res) => {
     getAllCats()
     .then(categories => {
@@ -14,7 +15,7 @@ router.get('/', (req,res) => {
         res.status(500).json({ message: "an error occured: " + err.message })
     })
 })
-//not yet finished
+
 function getAllCats(){
     return new Promise((resolve, reject) => {
         const statement = "SELECT * FROM category"

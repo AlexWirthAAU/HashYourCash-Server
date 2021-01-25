@@ -1,3 +1,5 @@
+//@Zoë
+
 const express = require('express');
 const router = express.Router();
 const getDb = require("../database").getDb;
@@ -10,6 +12,7 @@ const cfg = require('../config.json')
 sgMail.setApiKey(cfg.sendgrid.key);
 
 
+//Mail ändern
 router.post('/mail', checkAuth, (req, res) => {
     let mailData = req.body;
     let userId = req.headers.u_id;
@@ -23,6 +26,7 @@ router.post('/mail', checkAuth, (req, res) => {
         })
 });
 
+//PW ändern
 router.post('/password', checkAuth, (req, res) => {
     let passData = req.body;
     let userId = req.headers.u_id;
@@ -38,12 +42,13 @@ router.post('/password', checkAuth, (req, res) => {
 
 function changePw(passData, u_id) {
     return new Promise((resolve, reject) => {
+        //vergleich eingegebenes PW mit gehashtem passwort
     bcryptjs.compare(passData.oldPw, passData.currentPw, function(err, result_hash) {
         if(err) {
             reject(err.message);
         }
-        console.log("resultHash:" + result_hash);
         if(result_hash) {
+            //wenn übereinstimmt hash neues pw und safe in db
                 bcryptjs.hash(passData.newPw, saltRounds, function (err, hash) {
                     if (err) {
                         console.error("ERROR WITH HASHING", err.message)
@@ -56,6 +61,7 @@ function changePw(passData, u_id) {
                                 console.error("DB ERROR: ", err.message);
                                 reject(err.message)
                             } else {
+                                //informiere User über PW änderung
                                 const emailMessage = {
                                     to: passData.email,
                                     from: 'hashyourcash@gmail.com',
@@ -86,6 +92,7 @@ function changePw(passData, u_id) {
 }
 
 function changeMail(mailData, u_id) {
+    //neue Mail zu jeweiligem User speichen
     return new Promise((resolve, reject) => {
         const statement = "UPDATE users SET email = $1 WHERE u_id = $2";
         const values = [mailData.newMail, u_id];
